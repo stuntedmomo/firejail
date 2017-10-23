@@ -129,7 +129,6 @@ blacklist /var/run/mysql/mysqld.sock
 blacklist /var/run/mysqld/mysqld.sock
 blacklist /var/run/rpcbind.sock
 blacklist /var/run/screens
-blacklist /var/run/systemd
 blacklist /var/spool/anacron
 blacklist /var/spool/cron
 
