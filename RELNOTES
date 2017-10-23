@@ -1,3 +1,9 @@
+firejail (0.9.50.1) baseline; urgency=low
+  * branch tracking important fixes on top of 0.9.50 release
+  * bugfix: seccomp compile problems on various architectures
+  * bugfix: systemd-resolved problems on Arch and Ubuntu 17.10
+ -- netblue30 <netblue30@yahoo.com>  Mon, 23 Oct 2017 08:00:00 -0500
+  
 firejail (0.9.50) baseline; urgency=low
   * modif: --output split in two commands, --output and --output-stderr
   * feature: per-profile disable-mnt (--disable-mnt)
