@@ -1,3 +1,8 @@
+firejail (0.9.53-LTS) baseline; urgency=low
+  * work in progress
+  * branched on April 10 2018 from mainline
+ -- netblue30 <netblue30@yahoo.com>  Thu, 10 Apr 2018 08:00:00 -0500
+
 firejail (0.9.53) baseline; urgency=low
   * work in progress
   * modif: --force depercated
