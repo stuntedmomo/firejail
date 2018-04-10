@@ -856,32 +856,6 @@ static int remove_callback(const char *fpath, const struct stat *sb, int typefla
 }
 
 
-int remove_overlay_directory(void) {
-	sleep(1);
-
-	char *path;
-	if (asprintf(&path, "%s/.firejail", cfg.homedir) == -1)
-		errExit("asprintf");
-
-	// deal with obvious problems such as symlinks and root ownership
-	if (is_link(path)) {
-		fprintf(stderr, "Error: cannot follow symbolic link\n");
-		exit(1);
-	}
-	if (access(path, R_OK | W_OK | X_OK) == -1) {
-		fprintf(stderr, "Error: cannot access ~/.firejail directory\n");
-		exit(1);
-	}
-
-	EUID_ROOT();
-	if (setreuid(0, 0) < 0 ||
-	    setregid(0, 0) < 0)
-		errExit("setreuid/setregid");
-	errno = 0;
-
-	// FTW_PHYS - do not follow symbolic links
-	return nftw(path, remove_callback, 64, FTW_DEPTH | FTW_PHYS);
-}
 
 void flush_stdin(void) {
 	if (isatty(STDIN_FILENO)) {

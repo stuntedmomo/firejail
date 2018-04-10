@@ -139,15 +139,6 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
-			// chroot
-			else if (strncmp(ptr, "chroot ", 7) == 0) {
-				if (strcmp(ptr + 7, "yes") == 0)
-					cfg_val[CFG_CHROOT] = 1;
-				else if (strcmp(ptr + 7, "no") == 0)
-					cfg_val[CFG_CHROOT] = 0;
-				else
-					goto errout;
-			}
 			// prompt
 			else if (strncmp(ptr, "firejail-prompt ", 16) == 0) {
 				if (strcmp(ptr + 16, "yes") == 0)
@@ -314,14 +305,6 @@ int checkcfg(int val) {
 			else if (strncmp(ptr, "remount-proc-sys ", 17) == 0) {
 				fwarning("remount-proc-sys from firejail.config was deprecated\n");
 			}
-			else if (strncmp(ptr, "overlayfs ", 10) == 0) {
-				if (strcmp(ptr + 10, "yes") == 0)
-					cfg_val[CFG_OVERLAYFS] = 1;
-				else if (strcmp(ptr + 10, "no") == 0)
-					cfg_val[CFG_OVERLAYFS] = 0;
-				else
-					goto errout;
-			}
 			else if (strncmp(ptr, "private-home ", 13) == 0) {
 				if (strcmp(ptr + 13, "yes") == 0)
 					cfg_val[CFG_PRIVATE_HOME] = 1;
@@ -335,14 +318,6 @@ int checkcfg(int val) {
 					cfg_val[CFG_PRIVATE_LIB] = 1;
 				else if (strcmp(ptr + 12, "no") == 0)
 					cfg_val[CFG_PRIVATE_LIB] = 0;
-				else
-					goto errout;
-			}
-			else if (strncmp(ptr, "chroot-desktop ", 15) == 0) {
-				if (strcmp(ptr + 15, "yes") == 0)
-					cfg_val[CFG_CHROOT_DESKTOP] = 1;
-				else if (strcmp(ptr + 15, "no") == 0)
-					cfg_val[CFG_CHROOT_DESKTOP] = 0;
 				else
 					goto errout;
 			}
@@ -426,14 +401,6 @@ void print_compiletime_support(void) {
 #endif
 		);
 
-	printf("\t- chroot support is %s\n",
-#ifdef HAVE_CHROOT
-		"enabled"
-#else
-		"disabled"
-#endif
-		);
-
 	printf("\t- file and directory whitelisting support is %s\n",
 #ifdef HAVE_WHITELIST
 		"enabled"
@@ -461,14 +428,6 @@ void print_compiletime_support(void) {
 #ifdef HAVE_NETWORK_RESTRICTED
 	printf("\t- networking features are available only to root user\n");
 #endif
-
-	printf("\t- overlayfs support is %s\n",
-#ifdef HAVE_OVERLAYFS
-		"enabled"
-#else
-		"disabled"
-#endif
-		);
 
 	printf("\t- private-home support is %s\n",
 #ifdef HAVE_PRIVATE_HOME

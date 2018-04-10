@@ -217,7 +217,6 @@ typedef struct config_t {
 	ProfileEntry *profile;
 #define MAX_PROFILE_IGNORE 32
 	char *profile_ignore[MAX_PROFILE_IGNORE];
-	char *chrootdir;	// chroot directory
 	char *home_private;	// private home directory
 	char *home_private_keep;	// keep list for private home directory
 	char *etc_private_keep;	// keep list for private etc directory
@@ -226,7 +225,6 @@ typedef struct config_t {
 	char *bin_private_keep;	// keep list for private bin directory
 	char *lib_private_keep;	// keep list for private bin directory
 	char *cwd;		// current working directory
-	char *overlay_dir;
 	char *private_template; // template dir for tmpfs home
 
 	// networking
@@ -315,9 +313,6 @@ extern int arg_debug_whitelists;	// print debug messages for whitelists
 extern int arg_debug_private_lib;	// print debug messages for private-lib
 extern int arg_nonetwork;	// --net=none
 extern int arg_command;	// -c
-extern int arg_overlay;		// overlay option
-extern int arg_overlay_keep;	// place overlay diff in a known directory
-extern int arg_overlay_reuse;	// allow the reuse of overlays
 
 extern int arg_seccomp;	// enable default seccomp filter
 extern int arg_seccomp_postexec;	// need postexec ld.preload library?
@@ -726,15 +721,12 @@ enum {
 	CFG_X11,
 	CFG_BIND,
 	CFG_USERNS,
-	CFG_CHROOT,
 	CFG_SECCOMP,
 	CFG_NETWORK,
 	CFG_RESTRICTED_NETWORK,
 	CFG_FORCE_NONEWPRIVS,
 	CFG_WHITELIST,
 	CFG_XEPHYR_WINDOW_TITLE,
-	CFG_OVERLAYFS,
-	CFG_CHROOT_DESKTOP,
 	CFG_PRIVATE_HOME,
 	CFG_PRIVATE_BIN_NO_LOCAL,
 	CFG_FIREJAIL_PROMPT,

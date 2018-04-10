@@ -546,12 +546,7 @@ int sandbox(void* sandbox_arg) {
 	if (cfg.name)
 		fs_logger2("sandbox name:", cfg.name);
 	fs_logger2int("sandbox pid:", (int) sandbox_pid);
-	if (cfg.chrootdir)
-		fs_logger("sandbox filesystem: chroot");
-	else if (arg_overlay)
-		fs_logger("sandbox filesystem: overlay");
-	else
-		fs_logger("sandbox filesystem: local");
+	fs_logger("sandbox filesystem: local");
 	fs_logger("install mount namespace");
 
 	//****************************
@@ -708,56 +703,15 @@ int sandbox(void* sandbox_arg) {
 	if (arg_appimage)
 		enforce_filters();
 
-#ifdef HAVE_CHROOT
-	if (cfg.chrootdir) {
-		fs_chroot(cfg.chrootdir);
-
-		// force caps and seccomp if not started as root
-		if (getuid() != 0)
-			enforce_filters();
-		else
-			arg_seccomp = 1;
-
-		//****************************
-		// trace pre-install, this time inside chroot
-		//****************************
-		if (need_preload)
-			fs_trace_preload();
-	}
-	else
-#endif
-#ifdef HAVE_OVERLAYFS
-	if (arg_overlay)	{
-		fs_overlayfs();
-		// force caps and seccomp if not started as root
-		if (getuid() != 0)
-			enforce_filters();
-		else
-			arg_seccomp = 1;
-	}
-	else
-#endif
-		fs_basic_fs();
-
 	//****************************
 	// private mode
 	//****************************
 	if (arg_private) {
 		if (cfg.home_private) {	// --private=
-			if (cfg.chrootdir)
-				fwarning("private=directory feature is disabled in chroot\n");
-			else if (arg_overlay)
-				fwarning("private=directory feature is disabled in overlay\n");
-			else
-				fs_private_homedir();
+			fs_private_homedir();
 		}
 		else if (cfg.home_private_keep) { // --private-home=
-			if (cfg.chrootdir)
-				fwarning("private-home= feature is disabled in chroot\n");
-			else if (arg_overlay)
-				fwarning("private-home= feature is disabled in overlay\n");
-			else
-				fs_private_home_list();
+			fs_private_home_list();
 		}
 		else // --private
 			fs_private();
@@ -767,67 +721,37 @@ int sandbox(void* sandbox_arg) {
 		fs_private_dev();
 
 	if (arg_private_etc) {
-		if (cfg.chrootdir)
-			fwarning("private-etc feature is disabled in chroot\n");
-		else if (arg_overlay)
-			fwarning("private-etc feature is disabled in overlay\n");
-		else {
-			fs_private_dir_list("/etc", RUN_ETC_DIR, cfg.etc_private_keep);
-			// create /etc/ld.so.preload file again
-			if (need_preload)
-				fs_trace_preload();
-		}
+		fs_private_dir_list("/etc", RUN_ETC_DIR, cfg.etc_private_keep);
+		// create /etc/ld.so.preload file again
+		if (need_preload)
+			fs_trace_preload();
 	}
 
 	if (arg_private_opt) {
-		if (cfg.chrootdir)
-			fwarning("private-opt feature is disabled in chroot\n");
-		else if (arg_overlay)
-			fwarning("private-opt feature is disabled in overlay\n");
-		else {
-			fs_private_dir_list("/opt", RUN_OPT_DIR, cfg.opt_private_keep);
-		}
+		fs_private_dir_list("/opt", RUN_OPT_DIR, cfg.opt_private_keep);
 	}
 
 	if (arg_private_srv) {
-		if (cfg.chrootdir)
-			fwarning("private-srv feature is disabled in chroot\n");
-		else if (arg_overlay)
-			fwarning("private-srv feature is disabled in overlay\n");
-		else {
-			fs_private_dir_list("/srv", RUN_SRV_DIR, cfg.srv_private_keep);
-		}
+		fs_private_dir_list("/srv", RUN_SRV_DIR, cfg.srv_private_keep);
 	}
 
 	// private-bin is disabled for appimages
 	if (arg_private_bin && !arg_appimage) {
-		if (cfg.chrootdir)
-			fwarning("private-bin feature is disabled in chroot\n");
-		else if (arg_overlay)
-			fwarning("private-bin feature is disabled in overlay\n");
-		else {
-			// for --x11=xorg we need to add xauth command
-			if (arg_x11_xorg) {
-				EUID_USER();
-				char *tmp;
-				if (asprintf(&tmp, "%s,xauth", cfg.bin_private_keep) == -1)
-					errExit("asprintf");
-				cfg.bin_private_keep = tmp;
-				EUID_ROOT();
-			}
-			fs_private_bin_list();
+		// for --x11=xorg we need to add xauth command
+		if (arg_x11_xorg) {
+			EUID_USER();
+			char *tmp;
+			if (asprintf(&tmp, "%s,xauth", cfg.bin_private_keep) == -1)
+				errExit("asprintf");
+			cfg.bin_private_keep = tmp;
+			EUID_ROOT();
 		}
+		fs_private_bin_list();
 	}
 
 	// private-lib is disabled for appimages
 	if (arg_private_lib && !arg_appimage) {
-		if (cfg.chrootdir)
-			fwarning("private-lib feature is disabled in chroot\n");
-		else if (arg_overlay)
-			fwarning("private-lib feature is disabled in overlay\n");
-		else {
-			fs_private_lib();
-		}
+		fs_private_lib();
 	}
 
 	if (arg_private_tmp) {

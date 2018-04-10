@@ -53,9 +53,6 @@ int arg_debug_whitelists = 0;			// print debug messages for whitelists
 int arg_debug_private_lib = 0;			// print debug messages for private-lib
 int arg_nonetwork = 0;				// --net=none
 int arg_command = 0;				// -c
-int arg_overlay = 0;				// overlay option
-int arg_overlay_keep = 0;			// place overlay diff in a known directory
-int arg_overlay_reuse = 0;			// allow the reuse of overlays
 
 int arg_seccomp = 0;				// enable default seccomp filter
 int arg_seccomp_postexec = 0;			// need postexec ld.preload library?
@@ -310,19 +307,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		printf("\n");
 		exit(0);
 	}
-#ifdef HAVE_OVERLAYFS
-	else if (strcmp(argv[i], "--overlay-clean") == 0) {
-		if (checkcfg(CFG_OVERLAYFS)) {
-			if (remove_overlay_directory()) {
-				fprintf(stderr, "Error: cannot remove overlay directory\n");
-				exit(1);
-			}
-		}
-		else
-			exit_err_feature("overlayfs");
-		exit(0);
-	}
-#endif
 #ifdef HAVE_X11
 	else if (strcmp(argv[i], "--x11") == 0) {
 		if (checkcfg(CFG_X11)) {
@@ -1336,93 +1320,6 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--disable-mnt") == 0)
 			arg_disable_mnt = 1;
-#ifdef HAVE_OVERLAYFS
-		else if (strcmp(argv[i], "--overlay") == 0) {
-			if (checkcfg(CFG_OVERLAYFS)) {
-				if (arg_overlay) {
-					fprintf(stderr, "Error: only one overlay command is allowed\n");
-					exit(1);
-				}
-
-				if (cfg.chrootdir) {
-					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
-					exit(1);
-				}
-				struct stat s;
-				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-					fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
-					exit(1);
-				}
-				arg_overlay = 1;
-				arg_overlay_keep = 1;
-
-				char *subdirname;
-				if (asprintf(&subdirname, "%d", getpid()) == -1)
-					errExit("asprintf");
-				cfg.overlay_dir = fs_check_overlay_dir(subdirname, arg_overlay_reuse);
-
-				free(subdirname);
-			}
-			else
-				exit_err_feature("overlayfs");
-		}
-		else if (strncmp(argv[i], "--overlay-named=", 16) == 0) {
-			if (checkcfg(CFG_OVERLAYFS)) {
-				if (arg_overlay) {
-					fprintf(stderr, "Error: only one overlay command is allowed\n");
-					exit(1);
-				}
-				if (cfg.chrootdir) {
-					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
-					exit(1);
-				}
-				struct stat s;
-				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-					fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
-					exit(1);
-				}
-				arg_overlay = 1;
-				arg_overlay_keep = 1;
-				arg_overlay_reuse = 1;
-
-				char *subdirname = argv[i] + 16;
-				if (*subdirname == '\0') {
-					fprintf(stderr, "Error: invalid overlay option\n");
-					exit(1);
-				}
-
-				// check name
-				invalid_filename(subdirname, 0); // no globbing
-				if (strstr(subdirname, "..") || strstr(subdirname, "/")) {
-					fprintf(stderr, "Error: invalid overlay name\n");
-					exit(1);
-				}
-				cfg.overlay_dir = fs_check_overlay_dir(subdirname, arg_overlay_reuse);
-			}
-			else
-				exit_err_feature("overlayfs");
-		}
-		else if (strcmp(argv[i], "--overlay-tmpfs") == 0) {
-			if (checkcfg(CFG_OVERLAYFS)) {
-				if (arg_overlay) {
-					fprintf(stderr, "Error: only one overlay command is allowed\n");
-					exit(1);
-				}
-				if (cfg.chrootdir) {
-					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
-					exit(1);
-				}
-				struct stat s;
-				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-					fprintf(stderr, "Error: --overlay option is not available on Grsecurity systems\n");
-					exit(1);
-				}
-				arg_overlay = 1;
-			}
-			else
-				exit_err_feature("overlayfs");
-		}
-#endif
 		else if (strncmp(argv[i], "--profile=", 10) == 0) {
 			// multiple profile files are allowed!
 
@@ -1474,54 +1371,6 @@ int main(int argc, char **argv) {
 			else
 				cfg.profile_ignore[j] = argv[i] + 9;
 		}
-#ifdef HAVE_CHROOT
-		else if (strncmp(argv[i], "--chroot=", 9) == 0) {
-			if (checkcfg(CFG_CHROOT)) {
-				if (arg_overlay) {
-					fprintf(stderr, "Error: --overlay and --chroot options are mutually exclusive\n");
-					exit(1);
-				}
-
-				struct stat s;
-				if (stat("/proc/sys/kernel/grsecurity", &s) == 0) {
-					fprintf(stderr, "Error: --chroot option is not available on Grsecurity systems\n");
-					exit(1);
-				}
-
-
-				invalid_filename(argv[i] + 9, 0); // no globbing
-
-				// extract chroot dirname
-				cfg.chrootdir = argv[i] + 9;
-				// if the directory starts with ~, expand the home directory
-				if (*cfg.chrootdir == '~') {
-					char *tmp;
-					if (asprintf(&tmp, "%s%s", cfg.homedir, cfg.chrootdir + 1) == -1)
-						errExit("asprintf");
-					cfg.chrootdir = tmp;
-				}
-
-				// check chroot dirname exists
-				if (strstr(cfg.chrootdir, "..") || !is_dir(cfg.chrootdir) || is_link(cfg.chrootdir)) {
-					fprintf(stderr, "Error: invalid directory %s\n", cfg.chrootdir);
-					return 1;
-				}
-
-				// don't allow "--chroot=/"
-				char *rpath = realpath(cfg.chrootdir, NULL);
-				if (rpath == NULL || strcmp(rpath, "/") == 0) {
-					fprintf(stderr, "Error: invalid chroot directory\n");
-					exit(1);
-				}
-				cfg.chrootdir = rpath;
-
-				// check chroot directory structure
-				fs_check_chroot_dir(cfg.chrootdir);
-			}
-			else
-				exit_err_feature("chroot");
-		}
-#endif
 		else if (strcmp(argv[i], "--writable-etc") == 0) {
 			if (cfg.etc_private_keep) {
 				fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
@@ -2166,16 +2015,7 @@ int main(int argc, char **argv) {
 			}
 
 			// access call checks as real UID/GID, not as effective UID/GID
-			if(cfg.chrootdir) {
-				char *shellpath;
-				if (asprintf(&shellpath, "%s%s", cfg.chrootdir, cfg.shell) == -1)
-					errExit("asprintf");
-				if (access(shellpath, R_OK)) {
-					fprintf(stderr, "Error: cannot access shell file in chroot\n");
-					exit(1);
-				}
-				free(shellpath);
-			} else if (access(cfg.shell, R_OK)) {
+			if (access(cfg.shell, R_OK)) {
 				fprintf(stderr, "Error: cannot access shell file\n");
 				exit(1);
 			}
@@ -2264,18 +2104,6 @@ int main(int argc, char **argv) {
 		fwarning("--trace and --tracelog are mutually exclusive; --tracelog disabled\n");
 	}
 
-	// check user namespace (--noroot) options
-	if (arg_noroot) {
-		if (arg_overlay) {
-			fprintf(stderr, "Error: --overlay and --noroot are mutually exclusive.\n");
-			exit(1);
-		}
-		else if (cfg.chrootdir) {
-			fprintf(stderr, "Error: --chroot and --noroot are mutually exclusive.\n");
-			exit(1);
-		}
-	}
-
 	// enable seccomp if only seccomp.block-secondary was specified
 	if (arg_seccomp_block_secondary)
 		arg_seccomp = 1;
@@ -2346,39 +2174,31 @@ int main(int argc, char **argv) {
 
 	// use default.profile as the default
 	if (!custom_profile && !arg_noprofile) {
-		if (cfg.chrootdir) {
-			fwarning("default profile disabled by --chroot option\n");
+		// try to load a default profile
+		char *profile_name = DEFAULT_USER_PROFILE;
+		if (getuid() == 0)
+			profile_name = DEFAULT_ROOT_PROFILE;
+		if (arg_debug)
+			printf("Attempting to find %s.profile...\n", profile_name);
+
+		// look for the profile in ~/.config/firejail directory
+		char *usercfgdir;
+		if (asprintf(&usercfgdir, "%s/.config/firejail", cfg.homedir) == -1)
+			errExit("asprintf");
+		custom_profile = profile_find(profile_name, usercfgdir);
+		free(usercfgdir);
+
+		if (!custom_profile)
+			// look for the profile in /etc/firejail directory
+			custom_profile = profile_find(profile_name, SYSCONFDIR);
+
+		if (!custom_profile) {
+			fprintf(stderr, "Error: no default.profile installed\n");
+			exit(1);
 		}
-//		else if (arg_overlay) {
-//			fwarning("default profile disabled by --overlay option\n");
-//		}
-		else {
-			// try to load a default profile
-			char *profile_name = DEFAULT_USER_PROFILE;
-			if (getuid() == 0)
-				profile_name = DEFAULT_ROOT_PROFILE;
-			if (arg_debug)
-				printf("Attempting to find %s.profile...\n", profile_name);
 
-			// look for the profile in ~/.config/firejail directory
-			char *usercfgdir;
-			if (asprintf(&usercfgdir, "%s/.config/firejail", cfg.homedir) == -1)
-				errExit("asprintf");
-			custom_profile = profile_find(profile_name, usercfgdir);
-			free(usercfgdir);
-
-			if (!custom_profile)
-				// look for the profile in /etc/firejail directory
-				custom_profile = profile_find(profile_name, SYSCONFDIR);
-
-			if (!custom_profile) {
-				fprintf(stderr, "Error: no default.profile installed\n");
-				exit(1);
-			}
-
-			if (custom_profile)
-				fmessage("\n** Note: you can use --noprofile to disable %s.profile **\n\n", profile_name);
-		}
+		if (custom_profile)
+			fmessage("\n** Note: you can use --noprofile to disable %s.profile **\n\n", profile_name);
 	}
 	EUID_ASSERT();
 
@@ -2415,16 +2235,6 @@ int main(int argc, char **argv) {
  		errExit("pipe");
  	if (pipe(child_to_parent_fds) < 0)
 		errExit("pipe");
-
-	if (arg_noroot && arg_overlay) {
-		fwarning("--overlay and --noroot are mutually exclusive, noroot disabled\n");
-		arg_noroot = 0;
-	}
-	else if (arg_noroot && cfg.chrootdir) {
-		fwarning("--chroot and --noroot are mutually exclusive, noroot disabled\n");
-		arg_noroot = 0;
-	}
-
 
 	// set name and x11 run files
 	EUID_ROOT();

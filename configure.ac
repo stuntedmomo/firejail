@@ -51,14 +51,6 @@ AS_IF([test "x$enable_apparmor" = "xyes"], [
 ])
 AC_SUBST([EXTRA_LDFLAGS])
 
-HAVE_OVERLAYFS=""
-AC_ARG_ENABLE([overlayfs],
-    AS_HELP_STRING([--disable-overlayfs], [disable overlayfs]))
-AS_IF([test "x$enable_overlayfs" != "xno"], [
-	HAVE_OVERLAYFS="-DHAVE_OVERLAYFS"
-	AC_SUBST(HAVE_OVERLAYFS)
-])
-
 HAVE_PRIVATEHOME=""
 AC_ARG_ENABLE([private-home],
     AS_HELP_STRING([--disable-private-home], [disable private home feature]))
@@ -73,14 +65,6 @@ AC_ARG_ENABLE([seccomp],
 AS_IF([test "x$enable_seccomp" != "xno"], [
 	HAVE_SECCOMP="-DHAVE_SECCOMP"
 	AC_SUBST(HAVE_SECCOMP)
-])
-
-HAVE_CHROOT=""
-AC_ARG_ENABLE([chroot],
-    AS_HELP_STRING([--disable-chroot], [disable chroot]))
-AS_IF([test "x$enable_chroot" != "xno"], [
-	HAVE_CHROOT="-DHAVE_CHROOT"
-	AC_SUBST(HAVE_CHROOT)
 ])
 
 HAVE_BIND=""
@@ -211,7 +195,6 @@ echo "   seccomp: $HAVE_SECCOMP"
 echo "   <linux/seccomp.h>: $HAVE_SECCOMP_H"
 echo "   apparmor: $HAVE_APPARMOR"
 echo "   global config: $HAVE_GLOBALCFG"
-echo "   chroot: $HAVE_CHROOT"
 echo "   bind: $HAVE_BIND"
 echo "   network: $HAVE_NETWORK"
 echo "   user namespace: $HAVE_USERNS"
@@ -219,7 +202,6 @@ echo "   X11 sandboxing support: $HAVE_X11"
 echo "   whitelisting: $HAVE_WHITELIST"
 echo "   private home support: $HAVE_PRIVATE_HOME"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"
-echo "   overlayfs support: $HAVE_OVERLAYFS"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"
 echo "   Spectre compiler patch: $HAVE_SPECTRE"
 echo "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"

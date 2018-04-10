@@ -53,9 +53,6 @@ static char *usage_str =
 	"    --caps.keep=capability,capability - whitelist capabilities filter.\n"
 	"    --caps.print=name|pid - print the caps filter.\n"
 	"    --cgroup=tasks-file - place the sandbox in the specified control group.\n"
-#ifdef HAVE_CHROOT
-	"    --chroot=dirname - chroot into directory.\n"
-#endif
 	"    --cpu=cpu-number,cpu-number - set cpu affinity.\n"
 	"    --cpu.print=name|pid - print the cpus in use.\n"
 	"    --csh - use /bin/csh as default shell.\n"
