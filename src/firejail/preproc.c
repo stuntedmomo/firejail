@@ -89,10 +89,7 @@ void preproc_mount_mnt_dir(void) {
 			copy_file(PATH_SECCOMP_32, RUN_SECCOMP_32, getuid(), getgid(), 0644); // root needed
 			copy_file(PATH_SECCOMP_64, RUN_SECCOMP_64, getuid(), getgid(), 0644); // root needed
 		}
-		if (arg_allow_debuggers)
-			copy_file(PATH_SECCOMP_DEFAULT_DEBUG, RUN_SECCOMP_CFG, getuid(), getgid(), 0644); // root needed
-		else
-			copy_file(PATH_SECCOMP_DEFAULT, RUN_SECCOMP_CFG, getuid(), getgid(), 0644); // root needed
+		copy_file(PATH_SECCOMP_DEFAULT, RUN_SECCOMP_CFG, getuid(), getgid(), 0644); // root needed
 
 		if (arg_memory_deny_write_execute)
 			copy_file(PATH_SECCOMP_MDWX, RUN_SECCOMP_MDWX, getuid(), getgid(), 0644); // root needed

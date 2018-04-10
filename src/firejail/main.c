@@ -106,7 +106,6 @@ int arg_writable_run_user = 0;			// writable /run/user
 int arg_writable_var_log = 0;		// writable /var/log
 int arg_appimage = 0;				// appimage
 int arg_apparmor = 0;				// apparmor
-int arg_allow_debuggers = 0;			// allow debuggers
 int arg_x11_block = 0;				// block X11
 int arg_x11_xorg = 0;				// use X11 security extention
 int arg_allusers = 0;				// all user home directories visible
@@ -836,33 +835,6 @@ int main(int argc, char **argv) {
 	}
 	EUID_USER();
 
-
-	// process allow-debuggers
-	if (check_arg(argc, argv, "--allow-debuggers", 1)) {
-		// check kernel version
-		struct utsname u;
-		int rv = uname(&u);
-		if (rv != 0)
-			errExit("uname");
-		int major;
-		int minor;
-		if (2 != sscanf(u.release, "%d.%d", &major, &minor)) {
-			fprintf(stderr, "Error: cannot extract Linux kernel version: %s\n", u.version);
-			exit(1);
-		}
-		if (major < 4 || (major == 4 && minor < 8)) {
-			fprintf(stderr, "Error: --allow-debuggers is disabled on Linux kernels prior to 4.8. "
-				"A bug in ptrace call allows a full bypass of the seccomp filter. "
-				"Your current kernel version is %d.%d.\n", major, minor);
-			exit(1);
-		}
-
-		arg_allow_debuggers = 1;
-		char *cmd = strdup("noblacklist ${PATH}/strace");
-		if (!cmd)
-			errExit("strdup");
-		profile_add(cmd);
-	}
 
 	// check argv[0] symlink wrapper if this is not a login shell
 	if (*argv[0] != '-')

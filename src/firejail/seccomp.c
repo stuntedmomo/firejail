@@ -202,12 +202,9 @@ int seccomp_filter_drop(void) {
 
 			// build the seccomp filter as a regular user
 			int rv;
-			if (arg_allow_debuggers)
-				rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 7,
-					      PATH_FSECCOMP, "default", "drop", RUN_SECCOMP_CFG, RUN_SECCOMP_POSTEXEC, cfg.seccomp_list, "allow-debuggers");
-			else
-				rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 6,
-					      PATH_FSECCOMP, "default", "drop", RUN_SECCOMP_CFG, RUN_SECCOMP_POSTEXEC, cfg.seccomp_list);
+			rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 6,
+				      PATH_FSECCOMP, "default", "drop", RUN_SECCOMP_CFG, RUN_SECCOMP_POSTEXEC, cfg.seccomp_list);
+
 			if (rv)
 				exit(rv);
 
@@ -228,12 +225,8 @@ int seccomp_filter_drop(void) {
 
 		// build the seccomp filter as a regular user
 		int rv;
-		if (arg_allow_debuggers)
-			rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 6,
-				      PATH_FSECCOMP, "drop", RUN_SECCOMP_CFG, RUN_SECCOMP_POSTEXEC, cfg.seccomp_list_drop,  "allow-debuggers");
-		else
-			rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 5,
-				PATH_FSECCOMP, "drop", RUN_SECCOMP_CFG, RUN_SECCOMP_POSTEXEC, cfg.seccomp_list_drop);
+		rv = sbox_run(SBOX_USER | SBOX_CAPS_NONE | SBOX_SECCOMP, 5,
+			PATH_FSECCOMP, "drop", RUN_SECCOMP_CFG, RUN_SECCOMP_POSTEXEC, cfg.seccomp_list_drop);
 
 		if (rv)
 			exit(rv);
