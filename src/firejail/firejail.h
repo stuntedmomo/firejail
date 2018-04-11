@@ -364,8 +364,6 @@ extern int arg_writable_run_user;	// writable /run/user
 extern int arg_writable_var_log; // writable /var/log
 extern int arg_appimage;	// appimage
 extern int arg_apparmor;	// apparmor
-extern int arg_x11_block;	// block X11
-extern int arg_x11_xorg;	// use X11 security extention
 extern int arg_allusers;	// all user home directories visible
 extern int arg_machineid;	// preserve /etc/machine-id
 extern int arg_disable_mnt;	// disable /mnt and /media

@@ -104,14 +104,6 @@ AS_IF([test "x$enable_userns" != "xno"], [
 	AC_SUBST(HAVE_USERNS)
 ])
 
-HAVE_X11=""
-AC_ARG_ENABLE([x11],
-    AS_HELP_STRING([--disable-x11], [disable X11 sandboxing support]))
-AS_IF([test "x$enable_x11" != "xno"], [
-	HAVE_X11="-DHAVE_X11"
-	AC_SUBST(HAVE_X11)
-])
-
 HAVE_FILE_TRANSFER=""
 AC_ARG_ENABLE([file-transfer],
     AS_HELP_STRING([--disable-file-transfer], [disable file transfer]))
@@ -198,7 +190,6 @@ echo "   global config: $HAVE_GLOBALCFG"
 echo "   bind: $HAVE_BIND"
 echo "   network: $HAVE_NETWORK"
 echo "   user namespace: $HAVE_USERNS"
-echo "   X11 sandboxing support: $HAVE_X11"
 echo "   whitelisting: $HAVE_WHITELIST"
 echo "   private home support: $HAVE_PRIVATE_HOME"
 echo "   file transfer support: $HAVE_FILE_TRANSFER"

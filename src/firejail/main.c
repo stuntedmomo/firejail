@@ -106,8 +106,6 @@ int arg_writable_run_user = 0;			// writable /run/user
 int arg_writable_var_log = 0;		// writable /var/log
 int arg_appimage = 0;				// appimage
 int arg_apparmor = 0;				// apparmor
-int arg_x11_block = 0;				// block X11
-int arg_x11_xorg = 0;				// use X11 security extention
 int arg_allusers = 0;				// all user home directories visible
 int arg_machineid = 0;				// preserve /etc/machine-id
 int arg_allow_private_blacklist = 0; 		// blacklist things in private directories
@@ -304,40 +302,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		printf("\n");
 		exit(0);
 	}
-#ifdef HAVE_X11
-	else if (strcmp(argv[i], "--x11") == 0) {
-		if (checkcfg(CFG_X11)) {
-			x11_start(argc, argv);
-			exit(0);
-		}
-		else
-			exit_err_feature("x11");
-	}
-	else if (strcmp(argv[i], "--x11=xpra") == 0) {
-		if (checkcfg(CFG_X11)) {
-			x11_start_xpra(argc, argv);
-			exit(0);
-		}
-		else
-			exit_err_feature("x11");
-	}
-	else if (strcmp(argv[i], "--x11=xephyr") == 0) {
-		if (checkcfg(CFG_X11)) {
-			x11_start_xephyr(argc, argv);
-			exit(0);
-		}
-		else
-			exit_err_feature("x11");
-	}
-	else if (strcmp(argv[i], "--x11=xvfb") == 0) {
-		if (checkcfg(CFG_X11)) {
-			x11_start_xvfb(argc, argv);
-			exit(0);
-		}
-		else
-			exit_err_feature("x11");
-	}
-#endif
 #ifdef HAVE_NETWORK
 	else if (strncmp(argv[i], "--bandwidth=", 12) == 0) {
 		if (checkcfg(CFG_NETWORK)) {
@@ -999,18 +963,6 @@ int main(int argc, char **argv) {
 		}
 
 
-		//*************************************
-		// x11
-		//*************************************
-
-#ifdef HAVE_X11
-		else if (strncmp(argv[i], "--xephyr-screen=", 14) == 0) {
-			if (checkcfg(CFG_X11))
-				; // the processing is done directly in x11.c
-			else
-				exit_err_feature("x11");
-		}
-#endif
 		//*************************************
 		// filtering
 		//*************************************
@@ -1927,18 +1879,6 @@ int main(int argc, char **argv) {
 			}
 		}
 
-		// unlike all other x11 features, this is available always
-		else if (strcmp(argv[i], "--x11=none") == 0) {
-			arg_x11_block = 1;
-		}
-#ifdef HAVE_X11
-		else if (strcmp(argv[i], "--x11=xorg") == 0) {
-			if (checkcfg(CFG_X11))
-				arg_x11_xorg = 1;
-			else
-				exit_err_feature("x11");
-		}
-#endif
 		else if (strncmp(argv[i], "--join-or-start=", 16) == 0) {
 			// NOTE: this is second part of option handler,
 			//		 atempt to find and join sandbox is done in other one
@@ -2101,10 +2041,6 @@ int main(int argc, char **argv) {
 	}
 	EUID_ASSERT();
 
-	// block X11 sockets
-	if (arg_x11_block)
-		x11_block();
-
 	// check network configuration options - it will exit if anything went wrong
 	net_check_cfg();
 
@@ -2135,7 +2071,7 @@ int main(int argc, char **argv) {
  	if (pipe(child_to_parent_fds) < 0)
 		errExit("pipe");
 
-	// set name and x11 run files
+	// set name
 	EUID_ROOT();
 	lockfd_directory = open(RUN_DIRECTORY_LOCK_FILE, O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
 	if (lockfd_directory != -1) {
@@ -2145,9 +2081,6 @@ int main(int argc, char **argv) {
 	}
 	if (cfg.name)
 		set_name_run_file(sandbox_pid);
-	int display = x11_display();
-	if (display > 0)
-		set_x11_run_file(sandbox_pid, display);
 	flock(lockfd_directory, LOCK_UN);
 	close(lockfd_directory);
 	EUID_USER();

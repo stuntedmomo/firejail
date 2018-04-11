@@ -855,10 +855,6 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
-	// clean /tmp/.X11-unix sockets
-	fs_x11();
-	if (arg_x11_xorg)
-		x11_xorg();
 
 	//****************************
 	// set security filters
