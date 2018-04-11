@@ -1435,34 +1435,6 @@ int main(int argc, char **argv) {
 				cfg.srv_private_keep = argv[i] + 14;
 			arg_private_srv = 1;
 		}
-		else if (strncmp(argv[i], "--private-bin=", 14) == 0) {
-			// extract private bin list
-			if (*(argv[i] + 14) == '\0') {
-				fprintf(stderr, "Error: invalid private-bin option\n");
-				exit(1);
-			}
-			if (cfg.bin_private_keep) {
-				if ( asprintf(&cfg.bin_private_keep, "%s,%s", cfg.bin_private_keep, argv[i] + 14) < 0 )
-					errExit("asprintf");
-			} else
-				cfg.bin_private_keep = argv[i] + 14;
-			arg_private_bin = 1;
-		}
-		else if (strncmp(argv[i], "--private-lib", 13) == 0) {
-			if (checkcfg(CFG_PRIVATE_LIB)) {
-				// extract private lib list (if any)
-				if (argv[i][13] == '=') {
-					if (cfg.lib_private_keep) {
-						if (argv[i][14] != '\0' && asprintf(&cfg.lib_private_keep, "%s,%s", cfg.lib_private_keep, argv[i] + 14) < 0)
-							errExit("asprintf");
-					} else
-						cfg.lib_private_keep = argv[i] + 14;
-				}
-				arg_private_lib = 1;
-			}
-			else
-				exit_err_feature("private-lib");
-		}
 		else if (strcmp(argv[i], "--private-tmp") == 0) {
 			arg_private_tmp = 1;
 		}

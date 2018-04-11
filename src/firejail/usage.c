@@ -148,8 +148,6 @@ static char *usage_str =
 	"    --private-home=file,directory - build a new user home in a temporary\n"
 	"\tfilesystem, and copy the files and directories in the list in\n"
 	"\tthe new home.\n"
-	"    --private-bin=file,file - build a new /bin in a temporary filesystem,\n"
-	"\tand copy the programs in the list.\n"
 	"    --private-dev - create a new /dev directory with a small number of\n"
 	"\tcommon device files.\n"
 	"    --private-etc=file,directory - build a new /etc in a temporary\n"

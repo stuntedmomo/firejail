@@ -222,8 +222,6 @@ typedef struct config_t {
 	char *etc_private_keep;	// keep list for private etc directory
 	char *opt_private_keep;	// keep list for private opt directory
 	char *srv_private_keep;	// keep list for private srv directory
-	char *bin_private_keep;	// keep list for private bin directory
-	char *lib_private_keep;	// keep list for private bin directory
 	char *cwd;		// current working directory
 	char *private_template; // template dir for tmpfs home
 
@@ -732,7 +730,6 @@ enum {
 	CFG_JOIN,
 	CFG_ARP_PROBES,
 	CFG_XPRA_ATTACH,
-	CFG_PRIVATE_LIB,
 	CFG_APPARMOR,
 	CFG_DBUS,
 	CFG_MAX // this should always be the last entry

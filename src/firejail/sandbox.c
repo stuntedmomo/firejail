@@ -722,25 +722,6 @@ int sandbox(void* sandbox_arg) {
 		fs_private_dir_list("/srv", RUN_SRV_DIR, cfg.srv_private_keep);
 	}
 
-	// private-bin is disabled for appimages
-	if (arg_private_bin && !arg_appimage) {
-		// for --x11=xorg we need to add xauth command
-		if (arg_x11_xorg) {
-			EUID_USER();
-			char *tmp;
-			if (asprintf(&tmp, "%s,xauth", cfg.bin_private_keep) == -1)
-				errExit("asprintf");
-			cfg.bin_private_keep = tmp;
-			EUID_ROOT();
-		}
-		fs_private_bin_list();
-	}
-
-	// private-lib is disabled for appimages
-	if (arg_private_lib && !arg_appimage) {
-		fs_private_lib();
-	}
-
 	if (arg_private_tmp) {
 		// private-tmp is implemented as a whitelist
 		EUID_USER();
