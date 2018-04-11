@@ -187,7 +187,7 @@ uninstall:
 	rm -f $(DESTDIR)/$(datarootdir)/bash-completion/completions/firecfg
 
 DISTFILES = "src etc platform contrib configure configure.ac dummy.c Makefile.in install.sh mkman.sh mketc.sh mkdeb.sh mkuid.sh COPYING README RELNOTES"
-DISTFILES_TEST = "test/apps test/apps-x11 test/apps-x11-xorg test/root test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/arguments test/fs test/sysutils test/chroot"
+DISTFILES_TEST = "test/apps test/root test/fcopy test/environment test/profiles test/utils test/compile test/filters test/network test/arguments test/fs test/sysutils test/chroot"
 
 dist:
 	mv config.status config.status.old
@@ -232,17 +232,8 @@ scan-build: clean
 test-profiles:
 	cd test/profiles; ./profiles.sh | grep TESTING
 
-test-private-lib:
-	cd test/private-lib; ./private-lib.sh | grep TESTING
-
 test-apps:
 	cd test/apps; ./apps.sh | grep TESTING
-
-test-apps-x11:
-	cd test/apps-x11; ./apps-x11.sh | grep TESTING
-
-test-apps-x11-xorg:
-	cd test/apps-x11-xorg; ./apps-x11-xorg.sh | grep TESTING
 
 test-sysutils:
 	cd test/sysutils; ./sysutils.sh | grep TESTING
@@ -270,7 +261,7 @@ test-fcopy:
 test-fnetfilter:
 	cd test/fnetfilter; ./fnetfilter.sh | grep TESTING
 
-test: test-profiles test-private-lib test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-apps-x11 test-apps-x11-xorg test-filters test-arguments
+test: test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-apps test-filters test-arguments
 	echo "TEST COMPLETE"
 
 test-travis: test-profiles test-fcopy test-fnetfilter test-fs test-utils test-sysutils test-environment test-filters test-arguments

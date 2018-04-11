@@ -711,7 +711,6 @@ void sandboxfs(int op, pid_t pid, const char *path1, const char *path2);
 #define DEFAULT_ARP_PROBES 2
 enum {
 	CFG_FILE_TRANSFER = 0,
-	CFG_X11,
 	CFG_BIND,
 	CFG_USERNS,
 	CFG_SECCOMP,
