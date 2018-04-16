@@ -37,22 +37,6 @@ expect {
 }
 after 100
 
-send -- "firejail --debug-check-filename --noprofile --chroot=\"bla&&bla\"\r"
-expect {
-	timeout {puts "TESTING ERROR 3.1\n";exit}
-	"Checking filename bla&&bla" {puts "normal system\n"}
-	"Error: --chroot option is not available on Grsecurity systems" { puts "\nall done\n"; exit}
-}
-expect {
-	timeout {puts "TESTING ERROR 3.2\n";exit}
-	"Error:"
-}
-expect {
-	timeout {puts "TESTING ERROR 3.3\n";exit}
-	"is an invalid filename"
-}
-after 100
-
 send -- "firejail --debug-check-filename --noprofile --netfilter=\"bla&&bla\"\r"
 expect {
 	timeout {puts "TESTING ERROR 4.1\n";exit}
@@ -68,17 +52,6 @@ expect {
 }
 after 100
 
-send -- "firejail --debug-check-filename --noprofile --output=\"bla&&bla\"\r"
-expect {
-	timeout {puts "TESTING ERROR 5.2\n";exit}
-	"Error:"
-}
-expect {
-	timeout {puts "TESTING ERROR 5.3\n";exit}
-	"is an invalid filename"
-}
-after 100
-
 send -- "firejail --debug-check-filename --noprofile --private=\"bla&&bla\"\r"
 expect {
 	timeout {puts "TESTING ERROR 6.1\n";exit}
@@ -90,21 +63,6 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 6.3\n";exit}
-	"is an invalid filename"
-}
-after 100
-
-send -- "firejail --debug-check-filename --noprofile --private-bin=\"bla&&bla\"\r"
-expect {
-	timeout {puts "TESTING ERROR 7.1\n";exit}
-	"Checking filename bla&&bla"
-}
-expect {
-	timeout {puts "TESTING ERROR 7.2\n";exit}
-	"Error:"
-}
-expect {
-	timeout {puts "TESTING ERROR 7.3\n";exit}
 	"is an invalid filename"
 }
 after 100
