@@ -76,15 +76,6 @@ int checkcfg(int val) {
 			if (!ptr)
 				continue;
 
-			// file transfer
-			else if (strncmp(ptr, "file-transfer ", 14) == 0) {
-				if (strcmp(ptr + 14, "yes") == 0)
-					cfg_val[CFG_FILE_TRANSFER] = 1;
-				else if (strcmp(ptr + 14, "no") == 0)
-					cfg_val[CFG_FILE_TRANSFER] = 0;
-				else
-					goto errout;
-			}
 			// dbus
 			else if (strncmp(ptr, "dbus ", 5) == 0) {
 				if (strcmp(ptr + 5, "yes") == 0)
