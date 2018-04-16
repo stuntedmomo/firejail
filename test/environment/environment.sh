@@ -26,9 +26,6 @@ cp -- /bin/bash -testdir/.
 ./doubledash.exp
 rm -fr -- -testdir
 
-echo "TESTING: output (test/environment/output.exp)"
-./output.exp
-
 echo "TESTING: extract command (extract_command.exp)"
 ./extract_command.exp
 
@@ -67,9 +64,6 @@ fi
 
 echo "TESTING: firejail in firejail - single sandbox (test/environment/firejail-in-firejail.exp)"
 ./firejail-in-firejail.exp
-
-echo "TESTING: firejail in firejail - force new sandbox (test/environment/firejail-in-firejail2.exp)"
-./firejail-in-firejail2.exp
 
 which aplay
 if [ "$?" -eq 0 ];
