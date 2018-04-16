@@ -25,11 +25,6 @@
 
 static int initialized = 0;
 static int cfg_val[CFG_MAX];
-char *xephyr_screen = "800x600";
-char *xephyr_extra_params = "";
-char *xpra_extra_params = "";
-char *xvfb_screen = "800x600x24";
-char *xvfb_extra_params = "";
 char *netfilter_default = NULL;
 
 int checkcfg(int val) {
@@ -49,7 +44,6 @@ int checkcfg(int val) {
 		cfg_val[CFG_FIREJAIL_PROMPT] = 0;
 		cfg_val[CFG_DISABLE_MNT] = 0;
 		cfg_val[CFG_ARP_PROBES] = DEFAULT_ARP_PROBES;
-		cfg_val[CFG_XPRA_ATTACH] = 0;
 
 		// open configuration file
 		const char *fname = SYSCONFDIR "/firejail.config";
@@ -213,67 +207,6 @@ int checkcfg(int val) {
 					printf("netfilter default file %s\n", fname);
 			}
 
-			// Xephyr screen size
-			else if (strncmp(ptr, "xephyr-screen ", 14) == 0) {
-				// expecting two numbers and an x between them
-				int n1;
-				int n2;
-				int rv = sscanf(ptr + 14, "%dx%d", &n1, &n2);
-				if (rv != 2)
-					goto errout;
-				if (asprintf(&xephyr_screen, "%dx%d", n1, n2) == -1)
-					errExit("asprintf");
-			}
-
-			// xephyr window title
-			else if (strncmp(ptr, "xephyr-window-title ", 20) == 0) {
-				if (strcmp(ptr + 20, "yes") == 0)
-					cfg_val[CFG_XEPHYR_WINDOW_TITLE] = 1;
-				else if (strcmp(ptr + 20, "no") == 0)
-					cfg_val[CFG_XEPHYR_WINDOW_TITLE] = 0;
-				else
-					goto errout;
-			}
-
-			// Xephyr command extra parameters
-			else if (strncmp(ptr, "xephyr-extra-params ", 20) == 0) {
-				if (*xephyr_extra_params != '\0')
-					goto errout;
-				xephyr_extra_params = strdup(ptr + 20);
-				if (!xephyr_extra_params)
-					errExit("strdup");
-			}
-
-			// xpra server extra parameters
-			else if (strncmp(ptr, "xpra-extra-params ", 18) == 0) {
-				if (*xpra_extra_params != '\0')
-					goto errout;
-				xpra_extra_params = strdup(ptr + 18);
-				if (!xpra_extra_params)
-					errExit("strdup");
-			}
-
-			// Xvfb screen size
-	            		else if (strncmp(ptr, "xvfb-screen ", 12) == 0) {
-				// expecting three numbers separated by x's
-				unsigned int n1;
-				unsigned int n2;
-				unsigned int n3;
-				int rv = sscanf(ptr + 12, "%ux%ux%u", &n1, &n2, &n3);
-				if (rv != 3)
-					goto errout;
-				if (asprintf(&xvfb_screen, "%ux%ux%u", n1, n2, n3) == -1)
-					errExit("asprintf");
-			}
-
-			// Xvfb extra parameters
-			else if (strncmp(ptr, "xvfb-extra-params ", 18) == 0) {
-				if (*xvfb_extra_params != '\0')
-					goto errout;
-				xvfb_extra_params = strdup(ptr + 18);
-				if (!xvfb_extra_params)
-					errExit("strdup");
-			}
 
 			// quiet by default
 			else if (strncmp(ptr, "quiet-by-default ", 17) == 0) {
@@ -317,15 +250,6 @@ int checkcfg(int val) {
 				if (arp_probes <= 1 || arp_probes > 30)
 					goto errout;
 				cfg_val[CFG_ARP_PROBES] = arp_probes;
-			}
-			// xpra-attach
-			else if (strncmp(ptr, "xpra-attach ", 12) == 0) {
-				if (strcmp(ptr + 12, "yes") == 0)
-					cfg_val[CFG_XPRA_ATTACH] = 1;
-				else if (strcmp(ptr + 12, "no") == 0)
-					cfg_val[CFG_XPRA_ATTACH] = 0;
-				else
-					goto errout;
 			}
 			else
 				goto errout;

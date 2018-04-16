@@ -838,33 +838,6 @@ uid_t get_group_id(const char *group) {
 	return gid;
 }
 
-static int len_homedir = 0;
-static int remove_callback(const char *fpath, const struct stat *sb, int typeflag, struct FTW *ftwbuf) {
-	(void) sb;
-	(void) typeflag;
-	(void) ftwbuf;
-	assert(fpath);
-
-	if (len_homedir == 0)
-		len_homedir = strlen(cfg.homedir);
-
-	char *rp = realpath(fpath, NULL);	// this should never fail!
-	if (!rp)
-		return 1;
-	if (strncmp(rp, cfg.homedir, len_homedir) != 0)
-		return 1;
-	free(rp);
-
-	if (remove(fpath)) {	// removes the link not the actual file
-		fprintf(stderr, "Error: cannot remove file %s\n", fpath);
-		exit(1);
-	}
-
-	return 0;
-}
-
-
-
 void flush_stdin(void) {
 	if (isatty(STDIN_FILENO)) {
 		int cnt = 0;

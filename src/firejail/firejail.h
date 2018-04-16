@@ -635,12 +635,6 @@ void env_ibus_load(void);
 // fs_whitelist.c
 void fs_whitelist(void);
 
-// errno.c
-int errno_highest_nr(void);
-int errno_find_name(const char *name);
-char *errno_find_nr(int nr);
-void errno_print(void);
-
 // pulseaudio.c
 void pulseaudio_init(void);
 void pulseaudio_disable(void);
@@ -680,32 +674,6 @@ int program_in_path(const char *program);
 void fs_mkdir(const char *name);
 void fs_mkfile(const char *name);
 
-// x11.c
-
-// X11 display range as assigned by --x11 options
-//     We try display numbers in the range 21 through 1000.
-//     Normal X servers typically use displays in the 0-10 range;
-//     ssh's X11 forwarding uses 10-20, and login screens
-//     (e.g. gdm3) may use displays above 1000.
-#define X11_DISPLAY_START 21
-#define X11_DISPLAY_END 1000
-
-void fs_x11(void);
-int x11_display(void);
-void x11_start(int argc, char **argv);
-void x11_start_xpra(int argc, char **argv);
-void x11_start_xephyr(int argc, char **argv);
-void x11_block(void);
-void x11_start_xvfb(int argc, char **argv);
-
-// ls.c
-enum {
-	SANDBOX_FS_LS = 0,
-	SANDBOX_FS_GET,
-	SANDBOX_FS_PUT,
-	SANDBOX_FS_MAX // this should always be the last entry
-};
-void sandboxfs(int op, pid_t pid, const char *path1, const char *path2);
 
 // checkcfg.c
 #define DEFAULT_ARP_PROBES 2
@@ -725,19 +693,12 @@ enum {
 	CFG_DISABLE_MNT,
 	CFG_JOIN,
 	CFG_ARP_PROBES,
-	CFG_XPRA_ATTACH,
 	CFG_APPARMOR,
 	CFG_DBUS,
 	CFG_MAX // this should always be the last entry
 };
-extern char *xephyr_screen;
-extern char *xephyr_extra_params;
-extern char *xpra_extra_params;
-extern char *xvfb_screen;
-extern char *xvfb_extra_params;
 extern char *netfilter_default;
 int checkcfg(int val);
-void x11_xorg(void);
 
 // appimage.c
 void appimage_set(const char *appimage_path);
@@ -775,10 +736,6 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 
 // run sbox
 int sbox_run(unsigned filter, int num, ...);
-
-// git.c
-void git_install();
-void git_uninstall();
 
 // run_files.c
 void delete_run_files(pid_t pid);

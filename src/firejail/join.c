@@ -39,35 +39,6 @@ static void signal_handler(int sig){
 
 
 
-static void extract_x11_display(pid_t pid) {
-	char *fname;
-	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_X11_DIR, pid) == -1)
-		errExit("asprintf");
-
-	FILE *fp = fopen(fname, "r");
-	free(fname);
-	if (!fp)
-		return;
-
-	if (1 != fscanf(fp, "%d", &display)) {
-		fprintf(stderr, "Error: cannot read X11 display file\n");
-		fclose(fp);
-		return;
-	}
-	fclose(fp);
-
-	// check display range
-	if (display < X11_DISPLAY_START || display > X11_DISPLAY_END) {
-		fprintf(stderr, "Error: invalid X11 display range\n");
-		return;
-	}
-
-	// store the display number for join process in /run/firejail/x11
-	EUID_ROOT();
-	set_x11_run_file(getpid(), display);
-	EUID_USER();
-}
-
 static void extract_command(int argc, char **argv, int index) {
 	EUID_ASSERT();
 	if (index >= argc)
@@ -208,7 +179,7 @@ static void extract_user_namespace(pid_t pid) {
 void join(pid_t pid, int argc, char **argv, int index) {
 	EUID_ASSERT();
 	char *homedir = cfg.homedir;
-	pid_t parent = pid;
+//	pid_t parent = pid;
 
 	extract_command(argc, argv, index);
 	signal (SIGTERM, signal_handler);
@@ -237,8 +208,6 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			exit(1);
 		}
 	}
-
-	extract_x11_display(parent);
 
 	EUID_ROOT();
 	// in user mode set caps seccomp, cpu, cgroup, etc
