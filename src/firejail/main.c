@@ -298,8 +298,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 	else if (strcmp(argv[i], "--version") == 0) {
 		printf("firejail version %s\n", VERSION);
 		printf("\n");
-		print_compiletime_support();
-		printf("\n");
 		exit(0);
 	}
 #ifdef HAVE_NETWORK
