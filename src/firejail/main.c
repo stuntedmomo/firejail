@@ -847,10 +847,6 @@ int main(int argc, char **argv) {
 #endif
 		}
 	}
-	else {
-		// check --output option and execute it;
-		check_output(argc, argv); // the function will not return if --output or --output-stderr option was found
-	}
 	EUID_ASSERT();
 
 
