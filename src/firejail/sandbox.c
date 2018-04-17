@@ -712,13 +712,6 @@ int sandbox(void* sandbox_arg) {
 	}
 
 	//****************************
-	// Session D-BUS
-	//****************************
-	if (arg_nodbus)
-		dbus_session_disable();
-
-
-	//****************************
 	// hosts and hostname
 	//****************************
 	if (cfg.hostname)

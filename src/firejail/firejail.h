@@ -346,7 +346,6 @@ extern int arg_noprofile;	// use default.profile if none other found/specified
 extern int arg_memory_deny_write_execute;	// block writable and executable memory
 extern int arg_notv;	// --notv
 extern int arg_nodvd;	// --nodvd
-extern int arg_nodbus; // -nodbus
 
 extern int login_shell;
 extern int parent_to_child_fds[2];

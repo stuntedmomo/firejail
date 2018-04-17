@@ -98,7 +98,6 @@ int arg_noprofile = 0; // use default.profile if none other found/specified
 int arg_memory_deny_write_execute = 0;		// block writable and executable memory
 int arg_notv = 0;	// --notv
 int arg_nodvd = 0; // --nodvd
-int arg_nodbus = 0; // -nodbus
 int login_shell = 0;
 
 
@@ -1193,8 +1192,6 @@ int main(int argc, char **argv) {
 			arg_notv = 1;
 		else if (strcmp(argv[i], "--nodvd") == 0)
 			arg_nodvd = 1;
-		else if (strcmp(argv[i], "--nodbus") == 0)
-			arg_nodbus = 1;
 
 		//*************************************
 		// network
