@@ -40,17 +40,8 @@ echo "TESTING: private (test/fs/private.exp)"
 echo "TESTING: private home (test/fs/private-home.exp)"
 ./private-home.exp
 
-echo "TESTING: private home dir (test/fs/private-home-dir.exp)"
-./private-home-dir.exp
-
 echo "TESTING: private home dir same as user home (test/fs/private-homedir.exp)"
 ./private-homedir.exp
-
-echo "TESTING: private-etc (test/fs/private-etc.exp)"
-./private-etc.exp
-
-echo "TESTING: empty private-etc (test/fs/private-etc-empty.exp)"
-./private-etc-empty.exp
 
 echo "TESTING: whitelist empty (test/fs/whitelist-empty.exp)"
 ./whitelist-empty.exp

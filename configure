@@ -636,7 +636,6 @@ HAVE_NETWORK
 HAVE_GLOBALCFG
 HAVE_BIND
 HAVE_SECCOMP
-HAVE_PRIVATE_HOME
 EXTRA_LDFLAGS
 EGREP
 GREP
@@ -697,7 +696,6 @@ ac_subst_files=''
 ac_user_opts='
 enable_option_checking
 enable_apparmor
-enable_private_home
 enable_seccomp
 enable_bind
 enable_globalcfg
@@ -1340,7 +1338,6 @@ Optional Features:
   --disable-FEATURE       do not include FEATURE (same as --enable-FEATURE=no)
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
   --enable-apparmor       enable apparmor
-  --disable-private-home  disable private home feature
   --disable-seccomp       disable seccomp
   --disable-bind          disable bind
   --disable-globalcfg     if the global config file firejail.cfg is not
@@ -3564,19 +3561,6 @@ if test "x$enable_apparmor" = "xyes"; then :
 fi
 
 
-HAVE_PRIVATEHOME=""
-# Check whether --enable-private-home was given.
-if test "${enable_private_home+set}" = set; then :
-  enableval=$enable_private_home;
-fi
-
-if test "x$enable_private_home" != "xno"; then :
-
-	HAVE_PRIVATE_HOME="-DHAVE_PRIVATE_HOME"
-
-
-fi
-
 HAVE_SECCOMP=""
 # Check whether --enable-seccomp was given.
 if test "${enable_seccomp+set}" = set; then :
@@ -3799,7 +3783,7 @@ if test "$prefix" = /usr; then
 	sysconfdir="/etc"
 fi
 
-ac_config_files="$ac_config_files Makefile src/common.mk src/lib/Makefile src/fcopy/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile src/firemon/Makefile src/firecfg/Makefile src/fsec-print/Makefile src/fseccomp/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile"
+ac_config_files="$ac_config_files Makefile src/common.mk src/lib/Makefile src/fnet/Makefile src/firejail/Makefile src/fnetfilter/Makefile src/firemon/Makefile src/firecfg/Makefile src/fsec-print/Makefile src/fseccomp/Makefile src/libpostexecseccomp/Makefile src/fsec-optimize/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -4511,7 +4495,6 @@ do
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "src/common.mk") CONFIG_FILES="$CONFIG_FILES src/common.mk" ;;
     "src/lib/Makefile") CONFIG_FILES="$CONFIG_FILES src/lib/Makefile" ;;
-    "src/fcopy/Makefile") CONFIG_FILES="$CONFIG_FILES src/fcopy/Makefile" ;;
     "src/fnet/Makefile") CONFIG_FILES="$CONFIG_FILES src/fnet/Makefile" ;;
     "src/firejail/Makefile") CONFIG_FILES="$CONFIG_FILES src/firejail/Makefile" ;;
     "src/fnetfilter/Makefile") CONFIG_FILES="$CONFIG_FILES src/fnetfilter/Makefile" ;;
@@ -4988,7 +4971,6 @@ echo "   bind: $HAVE_BIND"
 echo "   network: $HAVE_NETWORK"
 echo "   user namespace: $HAVE_USERNS"
 echo "   whitelisting: $HAVE_WHITELIST"
-echo "   private home support: $HAVE_PRIVATE_HOME"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"
 echo "   Spectre compiler patch: $HAVE_SPECTRE"
 echo "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"

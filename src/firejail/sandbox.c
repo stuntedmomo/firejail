@@ -704,21 +704,6 @@ int sandbox(void* sandbox_arg) {
 	if (arg_private_dev)
 		fs_private_dev();
 
-	if (arg_private_etc) {
-		fs_private_dir_list("/etc", RUN_ETC_DIR, cfg.etc_private_keep);
-		// create /etc/ld.so.preload file again
-		if (need_preload)
-			fs_trace_preload();
-	}
-
-	if (arg_private_opt) {
-		fs_private_dir_list("/opt", RUN_OPT_DIR, cfg.opt_private_keep);
-	}
-
-	if (arg_private_srv) {
-		fs_private_dir_list("/srv", RUN_SRV_DIR, cfg.srv_private_keep);
-	}
-
 	if (arg_private_tmp) {
 		// private-tmp is implemented as a whitelist
 		EUID_USER();

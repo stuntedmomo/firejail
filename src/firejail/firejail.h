@@ -218,9 +218,6 @@ typedef struct config_t {
 #define MAX_PROFILE_IGNORE 32
 	char *profile_ignore[MAX_PROFILE_IGNORE];
 	char *home_private;	// private home directory
-	char *etc_private_keep;	// keep list for private etc directory
-	char *opt_private_keep;	// keep list for private opt directory
-	char *srv_private_keep;	// keep list for private srv directory
 	char *cwd;		// current working directory
 	char *private_template; // template dir for tmpfs home
 
@@ -338,12 +335,7 @@ extern char *arg_netns;		// "ip netns"-created network namespace to use
 extern int arg_doubledash;	// double dash
 extern int arg_shell_none;	// run the program directly without a shell
 extern int arg_private_dev;	// private dev directory
-extern int arg_private_etc;	// private etc directory
-extern int arg_private_opt;	// private opt directory
-extern int arg_private_srv;	// private srv directory
-extern int arg_private_bin;	// private bin directory
 extern int arg_private_tmp;	// private tmp directory
-extern int arg_private_lib;	// private lib directory
 extern int arg_scan;		// arp-scan all interfaces
 extern int arg_whitelist;	// whitelist commad
 extern int arg_nosound;	// disable sound
@@ -714,7 +706,7 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 #define PATH_FSECCOMP (LIBDIR "/firejail/fseccomp")
 #define PATH_FSEC_PRINT (LIBDIR "/firejail/fsec-print")
 #define PATH_FSEC_OPTIMIZE (LIBDIR "/firejail/fsec-optimize")
-#define PATH_FCOPY (LIBDIR "/firejail/fcopy")
+//#define PATH_FCOPY (LIBDIR "/firejail/fcopy")
 #define SBOX_STDIN_FILE "/run/firejail/mnt/sbox_stdin"
 #define PATH_FLDD (LIBDIR "/firejail/fldd")
 

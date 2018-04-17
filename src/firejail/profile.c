@@ -696,10 +696,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 
 	// writable-etc
 	if (strcmp(ptr, "writable-etc") == 0) {
-		if (cfg.etc_private_keep) {
-			fprintf(stderr, "Error: private-etc and writable-etc are mutually exclusive\n");
-			exit(1);
-		}
 		arg_writable_etc = 1;
 		return 0;
 	}
@@ -731,48 +727,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
-	// private /etc list of files and directories
-	if (strncmp(ptr, "private-etc ", 12) == 0) {
-		if (arg_writable_etc) {
-			fprintf(stderr, "Error: --private-etc and --writable-etc are mutually exclusive\n");
-			exit(1);
-		}
-		if (cfg.etc_private_keep) {
-			if ( asprintf(&cfg.etc_private_keep, "%s,%s", cfg.etc_private_keep, ptr + 12) < 0 )
-				errExit("asprintf");
-		} else {
-			cfg.etc_private_keep = ptr + 12;
-		}
-		arg_private_etc = 1;
-
-		return 0;
-	}
-
-	// private /opt list of files and directories
-	if (strncmp(ptr, "private-opt ", 12) == 0) {
-		if (cfg.opt_private_keep) {
-			if ( asprintf(&cfg.opt_private_keep, "%s,%s", cfg.opt_private_keep, ptr + 12) < 0 )
-				errExit("asprintf");
-		} else {
-			cfg.opt_private_keep = ptr + 12;
-		}
-		arg_private_opt = 1;
-
-		return 0;
-	}
-
-	// private /srv list of files and directories
-	if (strncmp(ptr, "private-srv ", 12) == 0) {
-		if (cfg.srv_private_keep) {
-			if ( asprintf(&cfg.srv_private_keep, "%s,%s", cfg.srv_private_keep, ptr + 12) < 0 )
-				errExit("asprintf");
-		} else {
-			cfg.srv_private_keep = ptr + 12;
-		}
-		arg_private_srv = 1;
-
-		return 0;
-	}
 
 	// filesystem bind
 	if (strncmp(ptr, "bind ", 5) == 0) {
