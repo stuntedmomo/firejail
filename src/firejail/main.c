@@ -47,10 +47,6 @@ Config cfg;					// configuration
 int arg_private = 0;				// mount private /home and /tmp directoryu
 int arg_private_template = 0; // mount private /home using a template
 int arg_debug = 0;				// print debug messages
-int arg_debug_check_filename = 0;		// print debug messages for filename checking
-int arg_debug_blacklists = 0;			// print debug messages for blacklists
-int arg_debug_whitelists = 0;			// print debug messages for whitelists
-int arg_debug_private_lib = 0;			// print debug messages for private-lib
 int arg_nonetwork = 0;				// --net=none
 int arg_command = 0;				// -c
 
@@ -854,14 +850,6 @@ int main(int argc, char **argv) {
 
 		if (strcmp(argv[i], "--debug") == 0 && !arg_quiet)
 			arg_debug = 1;
-		else if (strcmp(argv[i], "--debug-check-filename") == 0)
-			arg_debug_check_filename = 1;
-		else if (strcmp(argv[i], "--debug-blacklists") == 0)
-			arg_debug_blacklists = 1;
-		else if (strcmp(argv[i], "--debug-whitelists") == 0)
-			arg_debug_whitelists = 1;
-		else if (strcmp(argv[i], "--debug-private-lib") == 0)
-			arg_debug_private_lib = 1;
 		else if (strcmp(argv[i], "--quiet") == 0) {
 			arg_quiet = 1;
 			arg_debug = 0;
@@ -869,7 +857,6 @@ int main(int argc, char **argv) {
 		else if (strcmp(argv[i], "--allow-debuggers") == 0) {
 			// already handled
 		}
-
 
 		//*************************************
 		// filtering

@@ -47,7 +47,7 @@ static char *resolve_downloads(int nowhitelist_flag) {
 			errExit("asprintf");
 
 		if (stat(fname, &s) == 0) {
-			if (arg_debug || arg_debug_whitelists)
+			if (arg_debug)
 				printf("Downloads directory resolved as \"%s\"\n", fname);
 
 			char *rv;
@@ -93,10 +93,10 @@ static char *resolve_downloads(int nowhitelist_flag) {
 			if (ptr2) {
 				fclose(fp);
 				*ptr2 = '\0';
-				if (arg_debug || arg_debug_whitelists)
+				if (arg_debug)
 					printf("extracted %s from ~/.config/user-dirs.dirs\n", ptr1);
 				if (strlen(ptr1) != 0) {
-					if (arg_debug || arg_debug_whitelists)
+					if (arg_debug)
 						printf("Downloads directory resolved as \"%s\"\n", ptr1);
 
 					if (asprintf(&fname, "%s/%s", cfg.homedir, ptr1) == -1)
@@ -278,7 +278,7 @@ static void whitelist_path(ProfileEntry *entry) {
 	assert(wfile);
 	struct stat s;
 	if (stat(wfile, &s) == 0) {
-		if (arg_debug || arg_debug_whitelists)
+		if (arg_debug)
 			printf("Whitelisting %s\n", path);
 	}
 	else
@@ -389,12 +389,12 @@ void fs_whitelist(void) {
 		// replace ~/ or ${HOME} into /home/username
 		new_name = expand_home(dataptr, cfg.homedir);
 		assert(new_name);
-		if (arg_debug || arg_debug_whitelists)
+		if (arg_debug)
 			fprintf(stderr, "Debug %d: new_name #%s#, %s\n", __LINE__, new_name, (nowhitelist_flag)? "nowhitelist": "whitelist");
 
 		// valid path referenced to filesystem root
 		if (*new_name != '/') {
-			if (arg_debug || arg_debug_whitelists)
+			if (arg_debug)
 				fprintf(stderr, "Debug %d: \n", __LINE__);
 			goto errexit;
 		}
@@ -417,7 +417,7 @@ void fs_whitelist(void) {
 
 		if (!fname) {
 			// file not found, blank the entry in the list and continue
-			if (arg_debug || arg_debug_whitelists) {
+			if (arg_debug) {
 				printf("Removed whitelist/nowhitelist path: %s\n", entry->data);
 				printf("\texpanded: %s\n", new_name);
 				printf("\treal path: (null)\n");
@@ -454,12 +454,10 @@ void fs_whitelist(void) {
 			entry->data = EMPTY_STRING;
 			continue;
 		}
-		else if (arg_debug_whitelists)
-			printf("real path %s\n", fname);
 
 		if (nowhitelist_flag) {
 			// store the path in nowhitelist array
-			if (arg_debug || arg_debug_whitelists)
+			if (arg_debug)
 				printf("Storing nowhitelist %s\n", fname);
 
 			if (nowhitelist_c >= nowhitelist_m) {
@@ -478,7 +476,7 @@ void fs_whitelist(void) {
 		if (strncmp(new_name, cfg.homedir, strlen(cfg.homedir)) == 0) {
 			// whitelisting home directory is disabled if --private option is present
 			if (arg_private) {
-				if (arg_debug || arg_debug_whitelists)
+				if (arg_debug)
 					printf("\"%s\" disabled by --private\n", entry->data);
 
 				entry->data = EMPTY_STRING;
@@ -487,7 +485,7 @@ void fs_whitelist(void) {
 
 			entry->home_dir = 1;
 			home_dir = 1;
-			if (arg_debug || arg_debug_whitelists)
+			if (arg_debug)
 				fprintf(stderr, "Debug %d: fname #%s#, cfg.homedir #%s#\n",
 					__LINE__, fname, cfg.homedir);
 
@@ -610,7 +608,7 @@ void fs_whitelist(void) {
 				}
 			}
 			if (found) {
-				if (arg_debug || arg_debug_whitelists)
+				if (arg_debug)
 					printf("Skip nowhitelisted path %s\n", fname);
 				entry->data = EMPTY_STRING;
 				free(fname);
@@ -632,7 +630,7 @@ void fs_whitelist(void) {
 			if (asprintf(&newdata, "whitelist %s", fname) == -1)
 				errExit("asprintf");
 			entry->data = newdata;
-			if (arg_debug || arg_debug_whitelists)
+			if (arg_debug)
 				printf("Replaced whitelist path: %s\n", entry->data);
 		}
 		free(fname);
@@ -662,7 +660,7 @@ void fs_whitelist(void) {
 			errExit("mount bind");
 
 		// mount tmpfs on /tmp
-		if (arg_debug || arg_debug_whitelists)
+		if (arg_debug)
 			printf("Mounting tmpfs on /tmp directory\n");
 		if (mount("tmpfs", "/tmp", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=1777,gid=0") < 0)
 			errExit("mounting tmpfs on /tmp");
@@ -680,7 +678,7 @@ void fs_whitelist(void) {
 				errExit("mount bind");
 
 			// mount tmpfs on /media
-			if (arg_debug || arg_debug_whitelists)
+			if (arg_debug)
 				printf("Mounting tmpfs on /media directory\n");
 			if (mount("tmpfs", "/media", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /media");
@@ -701,7 +699,7 @@ void fs_whitelist(void) {
 				errExit("mount bind");
 
 			// mount tmpfs on /mnt
-			if (arg_debug || arg_debug_whitelists)
+			if (arg_debug)
 				printf("Mounting tmpfs on /mnt directory\n");
 			if (mount("tmpfs", "/mnt", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /mnt");
@@ -720,7 +718,7 @@ void fs_whitelist(void) {
 			errExit("mount bind");
 
 		// mount tmpfs on /var
-		if (arg_debug || arg_debug_whitelists)
+		if (arg_debug)
 			printf("Mounting tmpfs on /var directory\n");
 		if (mount("tmpfs", "/var", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting tmpfs on /var");
@@ -735,7 +733,7 @@ void fs_whitelist(void) {
 			errExit("mount bind");
 
 		// mount tmpfs on /dev
-		if (arg_debug || arg_debug_whitelists)
+		if (arg_debug)
 			printf("Mounting tmpfs on /dev directory\n");
 		if (mount("tmpfs", "/dev", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting tmpfs on /dev");
@@ -750,7 +748,7 @@ void fs_whitelist(void) {
 			errExit("mount bind");
 
 		// mount tmpfs on /opt
-		if (arg_debug || arg_debug_whitelists)
+		if (arg_debug)
 			printf("Mounting tmpfs on /opt directory\n");
 		if (mount("tmpfs", "/opt", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 			errExit("mounting tmpfs on /opt");
@@ -768,7 +766,7 @@ void fs_whitelist(void) {
 				errExit("mount bind");
 
 			// mount tmpfs on /srv
-			if (arg_debug || arg_debug_whitelists)
+			if (arg_debug)
 				printf("Mounting tmpfs on /srv directory\n");
 			if (mount("tmpfs", "/srv", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /srv");
@@ -789,7 +787,7 @@ void fs_whitelist(void) {
 				errExit("mount bind");
 
 			// mount tmpfs on /srv
-			if (arg_debug || arg_debug_whitelists)
+			if (arg_debug)
 				printf("Mounting tmpfs on /etc directory\n");
 			if (mount("tmpfs", "/etc", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /etc");
@@ -810,7 +808,7 @@ void fs_whitelist(void) {
 				errExit("mount bind");
 
 			// mount tmpfs on /srv
-			if (arg_debug || arg_debug_whitelists)
+			if (arg_debug)
 				printf("Mounting tmpfs on /usr/share directory\n");
 			if (mount("tmpfs", "/usr/share", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /usr/share");
@@ -837,7 +835,7 @@ void fs_whitelist(void) {
 			int rv = symlink(entry->data + 10, entry->link);
 			if (rv)
 				fprintf(stderr, "Warning cannot create symbolic link %s\n", entry->link);
-			else if (arg_debug || arg_debug_whitelists)
+			else if (arg_debug)
 				printf("Created symbolic link %s -> %s\n", entry->link, entry->data + 10);
 		}
 		else {
@@ -854,7 +852,7 @@ void fs_whitelist(void) {
 					int rv = symlink(entry->data + 10, entry->link);
 					if (rv)
 						fprintf(stderr, "Warning cannot create symbolic link %s\n", entry->link);
-					else if (arg_debug || arg_debug_whitelists)
+					else if (arg_debug)
 						printf("Created symbolic link %s -> %s\n", entry->link, entry->data + 10);
 				}
 			}

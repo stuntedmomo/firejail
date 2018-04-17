@@ -56,16 +56,10 @@ static char *usage_str =
 	"    --cpu=cpu-number,cpu-number - set cpu affinity.\n"
 	"    --cpu.print=name|pid - print the cpus in use.\n"
 	"    --debug - print sandbox debug messages.\n"
-	"    --debug-blacklists - debug blacklisting.\n"
 	"    --debug-caps - print all recognized capabilities.\n"
-	"    --debug-check-filename - debug filename checking.\n"
 	"    --debug-errnos - print all recognized error numbers.\n"
-	"    --debug-private-lib - debug for --private-lib option.\n"
 	"    --debug-protocols - print all recognized protocols.\n"
 	"    --debug-syscalls - print all recognized system calls.\n"
-#ifdef HAVE_WHITELIST
-	"    --debug-whitelists - debug whitelisting.\n"
-#endif
 #ifdef HAVE_NETWORK
 	"    --defaultgw=address - configure default gateway.\n"
 #endif
