@@ -660,7 +660,6 @@ int main(int argc, char **argv) {
 	int prog_index = -1;			  // index in argv where the program command starts
 	int lockfd_network = -1;
 	int lockfd_directory = -1;
-	int option_cgroup = 0;
 	int custom_profile = 0;	// custom profile loaded
 
 	// drop permissions by default and rise them when required
@@ -959,18 +958,6 @@ int main(int argc, char **argv) {
 			if (getuid() != 0 &&cfg.nice < 0)
 				cfg.nice = 0;
 			arg_nice = 1;
-		}
-		else if (strncmp(argv[i], "--cgroup=", 9) == 0) {
-			if (option_cgroup) {
-				fprintf(stderr, "Error: only a cgroup can be defined\n");
-				exit(1);
-			}
-
-			option_cgroup = 1;
-			cfg.cgroup = strdup(argv[i] + 9);
-			if (!cfg.cgroup)
-				errExit("strdup");
-			set_cgroup(cfg.cgroup);
 		}
 
 		//*************************************

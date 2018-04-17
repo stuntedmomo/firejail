@@ -41,8 +41,6 @@
 #define RUN_RO_DIR	"/run/firejail/firejail.ro.dir"
 #define RUN_RO_FILE	"/run/firejail/firejail.ro.file"
 #define RUN_MNT_DIR	"/run/firejail/mnt"	// a tmpfs is mounted on this directory before any of the files below are created
-#define RUN_CGROUP_CFG	"/run/firejail/mnt/cgroup"
-#define RUN_CPU_CFG	"/run/firejail/mnt/cpu"
 #define RUN_GROUPS_CFG	"/run/firejail/mnt/groups"
 #define RUN_PROTOCOL_CFG	"/run/firejail/mnt/protocol"
 #define RUN_HOME_DIR	"/run/firejail/mnt/home"
@@ -257,8 +255,6 @@ typedef struct config_t {
 	// cpu affinity, nice and control groups
 	uint32_t cpus;
 	int nice;
-	char *cgroup;
-
 
 	// command line
 	char *command_line;

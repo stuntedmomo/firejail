@@ -78,19 +78,6 @@ static void extract_nogroups(pid_t pid) {
 	free(fname);
 }
 
-static void extract_cgroup(pid_t pid) {
-	char *fname;
-	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_CGROUP_CFG) == -1)
-		errExit("asprintf");
-
-	struct stat s;
-	if (stat(fname, &s) == -1)
-		return;
-
-	// there is a cgroup file CGROUP_CFG, load it!
-	load_cgroup(fname);
-	free(fname);
-}
 
 static void extract_caps_seccomp(pid_t pid) {
 	// open stat file
@@ -196,17 +183,12 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	}
 
 	EUID_ROOT();
-	// in user mode set caps seccomp, cgroup, etc
+	// in user mode set caps seccomp etc
 	if (getuid() != 0) {
 		extract_caps_seccomp(pid);
-		extract_cgroup(pid);
 		extract_nogroups(pid);
 		extract_user_namespace(pid);
 	}
-
-	// set cgroup
-	if (cfg.cgroup)	// not available for uid 0
-		set_cgroup(cfg.cgroup);
 
 	// join namespaces
 	if (arg_join_network) {

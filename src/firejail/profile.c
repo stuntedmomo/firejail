@@ -682,12 +682,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
-	// cgroup
-	if (strncmp(ptr, "cgroup ", 7) == 0) {
-		set_cgroup(ptr + 7);
-		return 0;
-	}
-
 	// writable-etc
 	if (strcmp(ptr, "writable-etc") == 0) {
 		arg_writable_etc = 1;

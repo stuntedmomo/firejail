@@ -844,10 +844,6 @@ int sandbox(void* sandbox_arg) {
 	// set capabilities
 	set_caps();
 
-	// save cgroup in CGROUP_CFG file
-	if (cfg.cgroup)
-		save_cgroup();
-
 	// set seccomp
 #ifdef HAVE_SECCOMP
 	// install protocol filter
