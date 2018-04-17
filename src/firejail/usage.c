@@ -53,8 +53,6 @@ static char *usage_str =
 	"    --caps.keep=capability,capability - whitelist capabilities filter.\n"
 	"    --caps.print=name|pid - print the caps filter.\n"
 	"    --cgroup=tasks-file - place the sandbox in the specified control group.\n"
-	"    --cpu=cpu-number,cpu-number - set cpu affinity.\n"
-	"    --cpu.print=name|pid - print the cpus in use.\n"
 	"    --debug - print sandbox debug messages.\n"
 	"    --debug-caps - print all recognized capabilities.\n"
 	"    --debug-errnos - print all recognized error numbers.\n"

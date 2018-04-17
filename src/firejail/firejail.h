@@ -314,12 +314,6 @@ extern int arg_caps_drop_all;		// drop all capabilities
 extern int arg_caps_keep;		// keep list
 extern char *arg_caps_list;		// optional caps list
 
-extern int arg_rlimit_cpu;	// rlimit cpu
-extern int arg_rlimit_nofile;	// rlimit nofile
-extern int arg_rlimit_nproc;	// rlimit nproc
-extern int arg_rlimit_fsize;	// rlimit fsize
-extern int arg_rlimit_sigpending;// rlimit sigpending
-extern int arg_rlimit_as;	//rlimit as
 extern int arg_nogroups;	// disable supplementary groups
 extern int arg_nonewprivs;	// set the NO_NEW_PRIVS prctl
 extern int arg_noroot;		// create a new user namespace and disable root user

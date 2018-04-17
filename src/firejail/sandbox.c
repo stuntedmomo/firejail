@@ -844,12 +844,6 @@ int sandbox(void* sandbox_arg) {
 	// set capabilities
 	set_caps();
 
-	// set cpu affinity
-	if (cfg.cpus) {
-		save_cpu(); // save cpu affinity mask to CPU_CFG file
-		set_cpu_affinity();
-	}
-
 	// save cgroup in CGROUP_CFG file
 	if (cfg.cgroup)
 		save_cgroup();

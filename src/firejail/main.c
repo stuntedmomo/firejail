@@ -425,12 +425,6 @@ static void run_cmd_and_exit(int i, int argc, char **argv) {
 		exit(0);
 
 	}
-	else if (strncmp(argv[i], "--cpu.print=", 12) == 0) {
-		// join sandbox by pid or by name
-		pid_t pid = read_pid(argv[i] + 12);
-		cpu_print_filter(pid);
-		exit(0);
-	}
 	else if (strncmp(argv[i], "--apparmor.print=", 12) == 0) {
 		// join sandbox by pid or by name
 		pid_t pid = read_pid(argv[i] + 17);
@@ -960,8 +954,6 @@ int main(int argc, char **argv) {
 
 		else if (strncmp(argv[i], "--ipc-namespace", 15) == 0)
 			arg_ipc = 1;
-		else if (strncmp(argv[i], "--cpu=", 6) == 0)
-			read_cpu_list(argv[i] + 6);
 		else if (strncmp(argv[i], "--nice=", 7) == 0) {
 			cfg.nice = atoi(argv[i] + 7);
 			if (getuid() != 0 &&cfg.nice < 0)

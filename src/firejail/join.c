@@ -78,20 +78,6 @@ static void extract_nogroups(pid_t pid) {
 	free(fname);
 }
 
-static void extract_cpu(pid_t pid) {
-	char *fname;
-	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_CPU_CFG) == -1)
-		errExit("asprintf");
-
-	struct stat s;
-	if (stat(fname, &s) == -1)
-		return;
-
-	// there is a CPU_CFG file, load it!
-	load_cpu(fname);
-	free(fname);
-}
-
 static void extract_cgroup(pid_t pid) {
 	char *fname;
 	if (asprintf(&fname, "/proc/%d/root%s", pid, RUN_CGROUP_CFG) == -1)
@@ -210,10 +196,9 @@ void join(pid_t pid, int argc, char **argv, int index) {
 	}
 
 	EUID_ROOT();
-	// in user mode set caps seccomp, cpu, cgroup, etc
+	// in user mode set caps seccomp, cgroup, etc
 	if (getuid() != 0) {
 		extract_caps_seccomp(pid);
-		extract_cpu(pid);
 		extract_cgroup(pid);
 		extract_nogroups(pid);
 		extract_user_namespace(pid);
@@ -271,10 +256,6 @@ void join(pid_t pid, int argc, char **argv, int index) {
 					errExit("chdir");
 			}
 		}
-
-		// set cpu affinity
-		if (cfg.cpus)	// not available for uid 0
-			set_cpu_affinity();
 
 		// set caps filter
 		if (apply_caps == 1)	// not available for uid 0
