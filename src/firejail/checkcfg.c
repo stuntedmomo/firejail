@@ -220,14 +220,6 @@ int checkcfg(int val) {
 			else if (strncmp(ptr, "remount-proc-sys ", 17) == 0) {
 				fwarning("remount-proc-sys from firejail.config was deprecated\n");
 			}
-			else if (strncmp(ptr, "private-home ", 13) == 0) {
-				if (strcmp(ptr + 13, "yes") == 0)
-					cfg_val[CFG_PRIVATE_HOME] = 1;
-				else if (strcmp(ptr + 13, "no") == 0)
-					cfg_val[CFG_PRIVATE_HOME] = 0;
-				else
-					goto errout;
-			}
 			else if (strncmp(ptr, "private-bin-no-local ", 21) == 0) {
 				if (strcmp(ptr + 21, "yes") == 0)
 					cfg_val[CFG_PRIVATE_BIN_NO_LOCAL] = 1;

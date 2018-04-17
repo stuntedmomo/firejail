@@ -184,21 +184,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		arg_private = 1;
 		return 0;
 	}
-	if (strncmp(ptr, "private-home ", 13) == 0) {
-#ifdef HAVE_PRIVATE_HOME
-		if (checkcfg(CFG_PRIVATE_HOME)) {
-			if (cfg.home_private_keep) {
-				if ( asprintf(&cfg.home_private_keep, "%s,%s", cfg.home_private_keep, ptr + 13) < 0 )
-					errExit("asprintf");
-			} else
-				cfg.home_private_keep = ptr + 13;
-			arg_private = 1;
-		}
-		else
-			warning_feature_disabled("private-home");
-#endif
-		return 0;
-	}
 	else if (strcmp(ptr, "allusers") == 0) {
 		arg_allusers = 1;
 		return 0;

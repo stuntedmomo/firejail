@@ -51,14 +51,6 @@ AS_IF([test "x$enable_apparmor" = "xyes"], [
 ])
 AC_SUBST([EXTRA_LDFLAGS])
 
-HAVE_PRIVATEHOME=""
-AC_ARG_ENABLE([private-home],
-    AS_HELP_STRING([--disable-private-home], [disable private home feature]))
-AS_IF([test "x$enable_private_home" != "xno"], [
-	HAVE_PRIVATE_HOME="-DHAVE_PRIVATE_HOME"
-	AC_SUBST(HAVE_PRIVATE_HOME)
-])
-
 HAVE_SECCOMP=""
 AC_ARG_ENABLE([seccomp],
     AS_HELP_STRING([--disable-seccomp], [disable seccomp]))
@@ -183,7 +175,6 @@ echo "   bind: $HAVE_BIND"
 echo "   network: $HAVE_NETWORK"
 echo "   user namespace: $HAVE_USERNS"
 echo "   whitelisting: $HAVE_WHITELIST"
-echo "   private home support: $HAVE_PRIVATE_HOME"
 echo "   busybox workaround: $BUSYBOX_WORKAROUND"
 echo "   Spectre compiler patch: $HAVE_SPECTRE"
 echo "   EXTRA_LDFLAGS: $EXTRA_LDFLAGS"

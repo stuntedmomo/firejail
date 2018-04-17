@@ -6,7 +6,7 @@ include ../common.mk
 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $(INCLUDE) -c $< -o $@
 
 firejail: $(OBJS) ../lib/libnetlink.o ../lib/common.o ../lib/firejail_user.o
-	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o ../lib/ldd_utils.o ../lib/firejail_user.o $(LIBS) $(EXTRA_LDFLAGS)
+	$(CC)  $(LDFLAGS) -o $@ $(OBJS) ../lib/common.o ../lib/firejail_user.o $(LIBS) $(EXTRA_LDFLAGS)
 
 clean:; rm -f *.o firejail *.gcov *.gcda *.gcno
 

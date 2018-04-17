@@ -218,7 +218,6 @@ typedef struct config_t {
 #define MAX_PROFILE_IGNORE 32
 	char *profile_ignore[MAX_PROFILE_IGNORE];
 	char *home_private;	// private home directory
-	char *home_private_keep;	// keep list for private home directory
 	char *etc_private_keep;	// keep list for private etc directory
 	char *opt_private_keep;	// keep list for private opt directory
 	char *srv_private_keep;	// keep list for private srv directory
@@ -681,7 +680,6 @@ enum {
 	CFG_FORCE_NONEWPRIVS,
 	CFG_WHITELIST,
 	CFG_XEPHYR_WINDOW_TITLE,
-	CFG_PRIVATE_HOME,
 	CFG_PRIVATE_BIN_NO_LOCAL,
 	CFG_FIREJAIL_PROMPT,
 	CFG_FOLLOW_SYMLINK_AS_USER,
