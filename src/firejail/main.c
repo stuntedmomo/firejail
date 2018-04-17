@@ -1644,29 +1644,6 @@ int main(int argc, char **argv) {
 			cfg.timeout = extract_timeout(argv[i] + 10);
 		else if (strcmp(argv[i], "--appimage") == 0)
 			arg_appimage = 1;
-		else if (strcmp(argv[i], "--csh") == 0) {
-			if (arg_shell_none) {
-
-				fprintf(stderr, "Error: --shell=none was already specified.\n");
-				return 1;
-			}
-			if (cfg.shell) {
-				fprintf(stderr, "Error: only one default user shell can be specified\n");
-				return 1;
-			}
-			cfg.shell = "/bin/csh";
-		}
-		else if (strcmp(argv[i], "--zsh") == 0) {
-			if (arg_shell_none) {
-				fprintf(stderr, "Error: --shell=none was already specified.\n");
-				return 1;
-			}
-			if (cfg.shell) {
-				fprintf(stderr, "Error: only one default user shell can be specified\n");
-				return 1;
-			}
-			cfg.shell = "/bin/zsh";
-		}
 		else if (strcmp(argv[i], "--shell=none") == 0) {
 			arg_shell_none = 1;
 			if (cfg.shell) {

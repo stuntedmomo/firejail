@@ -44,24 +44,6 @@ else
         echo "TESTING SKIP: dash not found"
 fi
 
-which csh
-if [ "$?" -eq 0 ];
-then
-        echo "TESTING: csh (test/environment/csh.exp)"
-        ./csh.exp
-else
-        echo "TESTING SKIP: csh not found"
-fi
-
-which zsh
-if [ "$?" -eq 0 ];
-then
-        echo "TESTING: zsh (test/environment/zsh.exp)"
-        ./zsh.exp
-else
-        echo "TESTING SKIP: zsh not found"
-fi
-
 echo "TESTING: firejail in firejail - single sandbox (test/environment/firejail-in-firejail.exp)"
 ./firejail-in-firejail.exp
 
