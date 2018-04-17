@@ -60,12 +60,6 @@ int arg_caps_drop_all = 0;			// drop all capabilities
 int arg_caps_keep = 0;			// keep list
 char *arg_caps_list = NULL;			// optional caps list
 
-int arg_rlimit_cpu = 0;				// rlimit max cpu time
-int arg_rlimit_nofile = 0;			// rlimit nofile
-int arg_rlimit_nproc = 0;			// rlimit nproc
-int arg_rlimit_fsize = 0;				// rlimit fsize
-int arg_rlimit_sigpending = 0;			// rlimit fsize
-int arg_rlimit_as = 0;				// rlimit as
 int arg_nogroups = 0;				// disable supplementary groups
 int arg_nonewprivs = 0;			// set the NO_NEW_PRIVS prctl
 int arg_noroot = 0;				// create a new user namespace and disable root user
@@ -964,36 +958,6 @@ int main(int argc, char **argv) {
 		}
 
 
-		else if (strncmp(argv[i], "--rlimit-cpu=", 13) == 0) {
-			check_unsigned(argv[i] + 13, "Error: invalid rlimit");
-			sscanf(argv[i] + 13, "%llu", &cfg.rlimit_cpu);
-			arg_rlimit_cpu = 1;
-		}
-		else if (strncmp(argv[i], "--rlimit-nofile=", 16) == 0) {
-			check_unsigned(argv[i] + 16, "Error: invalid rlimit");
-			sscanf(argv[i] + 16, "%llu", &cfg.rlimit_nofile);
-			arg_rlimit_nofile = 1;
-		}
-		else if (strncmp(argv[i], "--rlimit-nproc=", 15) == 0) {
-			check_unsigned(argv[i] + 15, "Error: invalid rlimit");
-			sscanf(argv[i] + 15, "%llu", &cfg.rlimit_nproc);
-			arg_rlimit_nproc = 1;
-		}
-		else if (strncmp(argv[i], "--rlimit-fsize=", 15) == 0) {
-			check_unsigned(argv[i] + 15, "Error: invalid rlimit");
-			sscanf(argv[i] + 15, "%llu", &cfg.rlimit_fsize);
-			arg_rlimit_fsize = 1;
-		}
-		else if (strncmp(argv[i], "--rlimit-sigpending=", 20) == 0) {
-			check_unsigned(argv[i] + 20, "Error: invalid rlimit");
-			sscanf(argv[i] + 20, "%llu", &cfg.rlimit_sigpending);
-			arg_rlimit_sigpending = 1;
-		}
-		else if (strncmp(argv[i], "--rlimit-as=", 12) == 0) {
-			check_unsigned(argv[i] + 12, "Error: invalid rlimit");
-			sscanf(argv[i] + 12, "%llu", &cfg.rlimit_as);
-			arg_rlimit_as = 1;
-		}
 		else if (strncmp(argv[i], "--ipc-namespace", 15) == 0)
 			arg_ipc = 1;
 		else if (strncmp(argv[i], "--cpu=", 6) == 0)
