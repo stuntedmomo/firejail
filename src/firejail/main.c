@@ -91,8 +91,6 @@ int arg_writable_var_log = 0;		// writable /var/log
 int arg_appimage = 0;				// appimage
 int arg_apparmor = 0;				// apparmor
 int arg_allusers = 0;				// all user home directories visible
-int arg_machineid = 0;				// preserve /etc/machine-id
-int arg_allow_private_blacklist = 0; 		// blacklist things in private directories
 int arg_disable_mnt = 0;			// disable /mnt and /media
 int arg_noprofile = 0; // use default.profile if none other found/specified
 int arg_memory_deny_write_execute = 0;		// block writable and executable memory
@@ -1114,12 +1112,6 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--writable-var-log") == 0) {
 			arg_writable_var_log = 1;
-		}
-		else if (strcmp(argv[i], "--machine-id") == 0) {
-			arg_machineid = 1;
-		}
-		else if (strcmp(argv[i], "--allow-private-blacklist") == 0) {
-			fwarning("--allow-private-blacklist was deprecated\n");
 		}
 		else if (strcmp(argv[i], "--private") == 0) {
 			arg_private = 1;

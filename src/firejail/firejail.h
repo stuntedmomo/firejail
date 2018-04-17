@@ -92,7 +92,6 @@
 #define RUN_HOSTNAME_FILE	"/run/firejail/mnt/hostname"
 #define RUN_HOSTS_FILE	"/run/firejail/mnt/hosts"
 #define RUN_RESOLVCONF_FILE	"/run/firejail/mnt/resolv.conf"
-#define RUN_MACHINEID	"/run/firejail/mnt/machine-id"
 #define RUN_LDPRELOAD_FILE	"/run/firejail/mnt/ld.so.preload"
 #define RUN_UTMP_FILE		"/run/firejail/mnt/utmp"
 #define RUN_PASSWD_FILE		"/run/firejail/mnt/passwd"
@@ -340,7 +339,6 @@ extern int arg_writable_var_log; // writable /var/log
 extern int arg_appimage;	// appimage
 extern int arg_apparmor;	// apparmor
 extern int arg_allusers;	// all user home directories visible
-extern int arg_machineid;	// preserve /etc/machine-id
 extern int arg_disable_mnt;	// disable /mnt and /media
 extern int arg_noprofile;	// use default.profile if none other found/specified
 extern int arg_memory_deny_write_execute;	// block writable and executable memory

@@ -692,7 +692,6 @@ void fs_basic_fs(void) {
 	fs_var_lib();
 	fs_var_cache();
 	fs_var_utmp();
-	fs_machineid();
 
 	// don't leak user information
 	restrict_users();

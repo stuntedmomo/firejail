@@ -689,6 +689,7 @@ int sandbox(void* sandbox_arg) {
 	//****************************
 	if (arg_appimage)
 		enforce_filters();
+	fs_basic_fs();
 
 	//****************************
 	// private mode
