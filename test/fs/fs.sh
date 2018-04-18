@@ -37,9 +37,6 @@ echo "TESTING: read/write /dev/shm (test/fs/fs_dev_shm.exp)"
 echo "TESTING: private (test/fs/private.exp)"
 ./private.exp
 
-echo "TESTING: private home (test/fs/private-home.exp)"
-./private-home.exp
-
 echo "TESTING: private home dir same as user home (test/fs/private-homedir.exp)"
 ./private-homedir.exp
 

@@ -11,10 +11,7 @@ which less
 if [ "$?" -eq 0 ];
 then
 	echo "TESTING: firecfg (test/root/firecfg.exp)"
-	mv /home/netblue/.local/share/applications /home/netblue/applications-store
 	./firecfg.exp
-	rm -f /home/netblue/.local/share/applications
-	mv /home/netblue/applications-store /home/netblue/.local/share/applications
 else
 	echo "TESTING SKIP: firecfg, less not found"
 fi
@@ -78,9 +75,6 @@ echo "TESTING: fs whitelist mnt, opt, media (test/root/whitelist-mnt.exp)"
 echo "TESTING: join (test/root/join.exp)"
 ./join.exp
 
-echo "TESTING: login-nobody (test/root/login_nobody.exp)"
-./login_nobody.exp
-
 #********************************
 # seccomp
 #********************************
@@ -99,9 +93,6 @@ echo "TESTING: seccomp chown (test/root/seccomp-chown.exp)"
 echo "TESTING: firejail configuration (test/root/checkcfg.exp)"
 ./checkcfg.exp
 cp ../../etc/firejail.config /etc/firejail/.
-
-echo "TESTING: cgroup (test/root/cgroup.exp)"
-./cgroup.exp
 
 echo "TESTING: tmpfs (test/root/option_tmpfs.exp)"
 ./option_tmpfs.exp

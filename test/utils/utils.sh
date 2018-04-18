@@ -42,14 +42,6 @@ echo "TESTING: list (test/utils/list.exp)"
 echo "TESTING: tree (test/utils/tree.exp)"
 ./tree.exp
 
-if [ $(grep -c ^processor /proc/cpuinfo) -gt 1 ];
-then
-        echo "TESTING: cpu.print (test/utils/cpu-print.exp)"
-        ./cpu-print.exp
-else
-        echo "TESTING SKIP: cpu.print, not enough CPUs"
-fi
-
 echo "TESTING: fs.print (test/utils/fs-print.exp)"
 ./fs-print.exp
 

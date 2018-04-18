@@ -8,7 +8,7 @@ cd /home
 spawn $env(SHELL)
 match_max 100000
 
-send --  "firejail --name=jointesting --cpu=0 --nice=2\r"
+send --  "firejail --name=jointesting\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"

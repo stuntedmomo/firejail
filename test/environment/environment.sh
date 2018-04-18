@@ -13,9 +13,6 @@ echo "TESTING: timeout (test/environment/timeout.exp)"
 echo "TESTING: DNS (test/environment/dns.exp)"
 ./dns.exp
 
-echo "TESTING: machine-id (test/environment/machineid.exp)"
-./machineid.exp
-
 echo "TESTING: hosts file (test/environment/hostfile.exp)"
 ./hostfile.exp
 
@@ -56,9 +53,6 @@ else
         echo "TESTING SKIP: aplay not found"
 fi
 
-echo "TESTING: nice (test/environment/nice.exp)"
-./nice.exp
-
 echo "TESTING: quiet (test/environment/quiet.exp)"
 ./quiet.exp
 
@@ -83,15 +77,3 @@ then
 else
         echo "TESTING SKIP: ibus not configured"
 fi
-
-echo "TESTING: rlimit (test/environment/rlimit.exp)"
-./rlimit.exp
-
-echo "TESTING: rlimit profile (test/environment/rlimit-profile.exp)"
-./rlimit-profile.exp
-
-echo "TESTING: rlimit errors (test/environment/rlimit-bad.exp)"
-./rlimit-bad.exp
-
-echo "TESTING: rlimit errors profile (test/environment/rlimit-bad-profile.exp)"
-./rlimit-bad-profile.exp

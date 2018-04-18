@@ -39,7 +39,7 @@ send -- "mkdir /opt/firejail-test-dir\r"
 after 100
 send -- "touch /opt/firejail-test-dir/firejail-test-file\r"
 after 100
-send -- "firejail --private-opt=firejail-test-file,firejail-test-dir --debug\r"
+send -- "firejail --whitelist=/opt/firejail-test-file --whitelist=/opt/firejail-test-dir --debug\r"
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}
 	"Child process initialized"
@@ -62,7 +62,7 @@ send -- "mkdir /srv/firejail-test-dir\r"
 after 100
 send -- "touch /srv/firejail-test-dir/firejail-test-file\r"
 after 100
-send -- "firejail --private-srv=firejail-test-file,firejail-test-dir --debug\r"
+send -- "firejail --whitelist=/srv/firejail-test-file --whitelist=/srv/firejail-test-dir --debug\r"
 expect {
 	timeout {puts "TESTING ERROR 5\n";exit}
 	"Child process initialized"
@@ -77,14 +77,5 @@ expect {
 after 100
 send -- "exit\r"
 sleep 1
-
-
-
-
-
-
-
-
-
 
 puts "\nall done\n"
