@@ -669,15 +669,6 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		return 0;
 	}
 
-	// nice value
-	if (strncmp(ptr, "nice ", 4) == 0) {
-		cfg.nice = atoi(ptr + 5);
-		if (getuid() != 0 &&cfg.nice < 0)
-			cfg.nice = 0;
-		arg_nice = 1;
-		return 0;
-	}
-
 	// writable-etc
 	if (strcmp(ptr, "writable-etc") == 0) {
 		arg_writable_etc = 1;

@@ -82,7 +82,6 @@ int arg_no3d;					// disable 3d hardware acceleration
 int arg_quiet = 0;				// no output for scripting
 int arg_join_network = 0;			// join only the network namespace
 int arg_join_filesystem = 0;			// join only the mount namespace
-int arg_nice = 0;				// nice value configured
 int arg_ipc = 0;					// enable ipc namespace
 int arg_writable_etc = 0;			// writable etc
 int arg_writable_var = 0;			// writable var
@@ -850,12 +849,6 @@ int main(int argc, char **argv) {
 
 		else if (strncmp(argv[i], "--ipc-namespace", 15) == 0)
 			arg_ipc = 1;
-		else if (strncmp(argv[i], "--nice=", 7) == 0) {
-			cfg.nice = atoi(argv[i] + 7);
-			if (getuid() != 0 &&cfg.nice < 0)
-				cfg.nice = 0;
-			arg_nice = 1;
-		}
 
 		//*************************************
 		// filesystem

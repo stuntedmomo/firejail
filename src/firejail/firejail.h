@@ -242,18 +242,7 @@ typedef struct config_t {
 	char *seccomp_list_keep;	// seccomp keep list
 	char *protocol;			// protocol list
 
-	// rlimits
-	long long unsigned rlimit_cpu;
-	long long unsigned rlimit_nofile;
-	long long unsigned rlimit_nproc;
-	long long unsigned rlimit_fsize;
-	long long unsigned rlimit_sigpending;
-	long long unsigned rlimit_as;
 	unsigned timeout;	// maximum time elapsed before killing the sandbox
-
-	// cpu affinity, nice and control groups
-	uint32_t cpus;
-	int nice;
 
 	// command line
 	char *command_line;
@@ -330,7 +319,6 @@ extern int arg_no3d;		// disable 3d hardware acceleration
 extern int arg_quiet;		// no output for scripting
 extern int arg_join_network;	// join only the network namespace
 extern int arg_join_filesystem;	// join only the mount namespace
-extern int arg_nice;		// nice value configured
 extern int arg_ipc;		// enable ipc namespace
 extern int arg_writable_etc;	// writable etc
 extern int arg_writable_var;	// writable var

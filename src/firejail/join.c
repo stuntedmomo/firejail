@@ -37,8 +37,6 @@ static void signal_handler(int sig){
 	exit(sig);
 }
 
-
-
 static void extract_command(int argc, char **argv, int index) {
 	EUID_ASSERT();
 	if (index >= argc)
@@ -265,17 +263,6 @@ void join(pid_t pid, int argc, char **argv, int index) {
 			// set caps filter
 			if (apply_caps == 1)	// not available for uid 0
 				caps_set(caps);
-		}
-
-		// set nice
-		if (arg_nice) {
-			errno = 0;
-			int rv = nice(cfg.nice);
-			(void) rv;
-			if (errno) {
-				fwarning("cannot set nice value\n");
-				errno = 0;
-			}
 		}
 
 		// set environment, add x11 display

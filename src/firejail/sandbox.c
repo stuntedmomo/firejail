@@ -819,19 +819,6 @@ int sandbox(void* sandbox_arg) {
 		}
 	}
 
-
-	// set nice
-	if (arg_nice) {
-		errno = 0;
-		int rv = nice(cfg.nice);
-		(void) rv;
-		if (errno) {
-			fwarning("cannot set nice value\n");
-			errno = 0;
-		}
-	}
-
-
 	//****************************
 	// set security filters
 	//****************************
