@@ -814,7 +814,7 @@ int profile_check_line(char *ptr, int lineno, const char *fname) {
 		}
 		else {
 			fwarning("\"%s\" is not supported in LTS build\n", ptr);
-			return 1;
+			return 0;
 		}
 	}
 
