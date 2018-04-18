@@ -22,15 +22,6 @@
 #include "../include/pid.h"
 #define BUFLEN 4096
 
-static void delete_x11_run_file(pid_t pid) {
-	char *fname;
-	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_X11_DIR, pid) == -1)
-		errExit("asprintf");
-	int rv = unlink(fname);
-	(void) rv;
-	free(fname);
-}
-
 static void delete_profile_run_file(pid_t pid) {
 	char *fname;
 	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_PROFILE_DIR, pid) == -1)
@@ -71,7 +62,6 @@ void delete_run_files(pid_t pid) {
 	delete_bandwidth_run_file(pid);
 	delete_network_run_file(pid);
 	delete_name_run_file(pid);
-	delete_x11_run_file(pid);
 	delete_profile_run_file(pid);
 }
 
@@ -116,25 +106,6 @@ void set_name_run_file(pid_t pid) {
 		exit(1);
 	}
 	fprintf(fp, "%s\n", cfg.name);
-
-	// mode and ownership
-	SET_PERMS_STREAM(fp, 0, 0, 0644);
-	fclose(fp);
-}
-
-
-void set_x11_run_file(pid_t pid, int display) {
-	char *fname;
-	if (asprintf(&fname, "%s/%d", RUN_FIREJAIL_X11_DIR, pid) == -1)
-		errExit("asprintf");
-
-	// the file is deleted first
-	FILE *fp = fopen(fname, "w");
-	if (!fp) {
-		fprintf(stderr, "Error: cannot create %s\n", fname);
-		exit(1);
-	}
-	fprintf(fp, "%d\n", display);
 
 	// mode and ownership
 	SET_PERMS_STREAM(fp, 0, 0, 0644);
