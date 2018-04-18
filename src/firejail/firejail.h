@@ -625,7 +625,6 @@ void run_symlink(int argc, char **argv);
 // paths.c
 char **build_paths(void);
 unsigned int count_paths(void);
-int program_in_path(const char *program);
 
 // fs_mkdir.c
 void fs_mkdir(const char *name);
@@ -635,22 +634,21 @@ void fs_mkfile(const char *name);
 // checkcfg.c
 #define DEFAULT_ARP_PROBES 2
 enum {
-	CFG_BIND = 0,
-	CFG_USERNS,
-	CFG_SECCOMP,
-	CFG_NETWORK,
-	CFG_RESTRICTED_NETWORK,
-	CFG_FORCE_NONEWPRIVS,
-	CFG_WHITELIST,
-	CFG_XEPHYR_WINDOW_TITLE,
-	CFG_PRIVATE_BIN_NO_LOCAL,
+	CFG_APPARMOR = 0,
+	CFG_ARP_PROBES,
+	CFG_BIND,
+	CFG_DISABLE_MNT,
 	CFG_FIREJAIL_PROMPT,
 	CFG_FOLLOW_SYMLINK_AS_USER,
-	CFG_DISABLE_MNT,
+	CFG_FORCE_NONEWPRIVS,
 	CFG_JOIN,
-	CFG_ARP_PROBES,
-	CFG_APPARMOR,
-	CFG_DBUS,
+	CFG_NETWORK,
+	// quiet by default handled in arg_quiet
+	CFG_RESTRICTED_NETWORK,
+	// netfilter default handled as string
+	CFG_SECCOMP,
+	CFG_USERNS,
+	CFG_WHITELIST,
 	CFG_MAX // this should always be the last entry
 };
 extern char *netfilter_default;

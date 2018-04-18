@@ -5,7 +5,7 @@ cd /home
 spawn $env(SHELL)
 match_max 100000
 
-send -- "firejail --private --shell=/bin/dash\r"
+send -- "firejail --private --shell=/bin/zsh\r"
 expect {
 	timeout {puts "TESTING ERROR 0\n";exit}
 	"Child process initialized"
@@ -19,7 +19,7 @@ expect {
 }
 expect {
 	timeout {puts "TESTING ERROR 2\n";exit}
-	"/bin/dash"
+	"/bin/zsh"
 }
 expect {
 	timeout {puts "TESTING ERROR 3\n";exit}

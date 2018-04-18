@@ -206,28 +206,6 @@ void fs_var_cache(void) {
 			errExit("mounting /var/cache/apache2");
 		fs_logger("tmpfs /var/cache/apache2");
 	}
-
-	if (stat("/var/cache/lighttpd", &s) == 0) {
-		if (arg_debug)
-			printf("Mounting tmpfs on /var/cache/lighttpd\n");
-		if (mount("tmpfs", "/var/cache/lighttpd", "tmpfs", MS_NOSUID | MS_NOEXEC | MS_NODEV | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
-			errExit("mounting /var/cache/lighttpd");
-		fs_logger("tmpfs /var/cache/lighttpd");
-
-		struct passwd *p = getpwnam("www-data");
-		uid_t uid = 0;
-		gid_t gid = 0;
-		if (p) {
-			uid = p->pw_uid;
-			gid = p->pw_gid;
-		}
-
-		mkdir_attr("/var/cache/lighttpd/compress", 0755, uid, gid);
-		fs_logger("mkdir /var/cache/lighttpd/compress");
-
-		mkdir_attr("/var/cache/lighttpd/uploads", 0755, uid, gid);
-		fs_logger("/var/cache/lighttpd/uploads");
-	}
 }
 
 void dbg_test_dir(const char *dir) {

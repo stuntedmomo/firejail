@@ -40,7 +40,6 @@ int checkcfg(int val) {
 			cfg_val[i] = 1; // most of them are enabled by default
 		cfg_val[CFG_RESTRICTED_NETWORK] = 0; // disabled by default
 		cfg_val[CFG_FORCE_NONEWPRIVS] = 0;
-		cfg_val[CFG_PRIVATE_BIN_NO_LOCAL] = 0;
 		cfg_val[CFG_FIREJAIL_PROMPT] = 0;
 		cfg_val[CFG_DISABLE_MNT] = 0;
 		cfg_val[CFG_ARP_PROBES] = DEFAULT_ARP_PROBES;
@@ -70,15 +69,6 @@ int checkcfg(int val) {
 			if (!ptr)
 				continue;
 
-			// dbus
-			else if (strncmp(ptr, "dbus ", 5) == 0) {
-				if (strcmp(ptr + 5, "yes") == 0)
-					cfg_val[CFG_DBUS] = 1;
-				else if (strcmp(ptr + 5, "no") == 0)
-					cfg_val[CFG_DBUS] = 0;
-				else
-					goto errout;
-			}
 			// join
 			else if (strncmp(ptr, "join ", 5) == 0) {
 				if (strcmp(ptr + 5, "yes") == 0)
@@ -207,7 +197,6 @@ int checkcfg(int val) {
 					printf("netfilter default file %s\n", fname);
 			}
 
-
 			// quiet by default
 			else if (strncmp(ptr, "quiet-by-default ", 17) == 0) {
 				if (strcmp(ptr + 17, "yes") == 0)
@@ -219,14 +208,6 @@ int checkcfg(int val) {
 			}
 			else if (strncmp(ptr, "remount-proc-sys ", 17) == 0) {
 				fwarning("remount-proc-sys from firejail.config was deprecated\n");
-			}
-			else if (strncmp(ptr, "private-bin-no-local ", 21) == 0) {
-				if (strcmp(ptr + 21, "yes") == 0)
-					cfg_val[CFG_PRIVATE_BIN_NO_LOCAL] = 1;
-				else if (strcmp(ptr + 21, "no") == 0)
-					cfg_val[CFG_PRIVATE_BIN_NO_LOCAL] = 0;
-				else
-					goto errout;
 			}
 			else if (strncmp(ptr, "disable-mnt ", 12) == 0) {
 				if (strcmp(ptr + 12, "yes") == 0)
@@ -260,6 +241,6 @@ errout:
 	free(ptr);
 	assert(fp);
 	fclose(fp);
-	fprintf(stderr, "Error: invalid line %d in firejail configuration file\n", line );
+	fprintf(stderr, "TESTING Error: invalid line %d in firejail configuration file\n", line );
 	exit(1);
 }
