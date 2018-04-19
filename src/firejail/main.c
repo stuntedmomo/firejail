@@ -956,9 +956,6 @@ int main(int argc, char **argv) {
 			custom_profile = 1;
 			free(ppath);
 		}
-		else if (strncmp(argv[i], "--profile-path=", 15) == 0) {
-			fwarning("--profile-path has been deprecated\n");
-		}
 		else if (strcmp(argv[i], "--noprofile") == 0) {
 			if (custom_profile) {
 				fprintf(stderr, "Error: --profile and --noprofile options are mutually exclusive\n");

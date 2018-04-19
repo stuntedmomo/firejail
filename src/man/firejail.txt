@@ -1,6 +1,6 @@
 .TH FIREJAIL 1 "MONTH YEAR" "VERSION" "firejail man page"
 .SH NAME
-Firejail LTS \- Long Term Support version of Firejail
+Firejail \- Linux namespaces sandbox program
 .SH SYNOPSIS
 Start a sandbox:
 .PP

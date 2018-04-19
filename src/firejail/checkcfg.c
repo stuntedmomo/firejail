@@ -123,10 +123,6 @@ int checkcfg(int val) {
 				else
 					goto errout;
 			}
-			// follow symlink in private-bin command
-			else if (strncmp(ptr, "follow-symlink-private-bin ", 27) == 0) {
-				fwarning("follow-symlink-private-bin from firejail.config was deprecated\n");
-			}
 			// nonewprivs
 			else if (strncmp(ptr, "force-nonewprivs ", 17) == 0) {
 				if (strcmp(ptr + 17, "yes") == 0)
@@ -205,9 +201,6 @@ int checkcfg(int val) {
 					arg_quiet = 0;
 				else
 					goto errout;
-			}
-			else if (strncmp(ptr, "remount-proc-sys ", 17) == 0) {
-				fwarning("remount-proc-sys from firejail.config was deprecated\n");
 			}
 			else if (strncmp(ptr, "disable-mnt ", 12) == 0) {
 				if (strcmp(ptr + 12, "yes") == 0)

@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# set a new firejail config file
-#cp firejail.config /etc/firejail/firejail.config
-
-
 #********************************
 # firecfg
 #********************************
@@ -12,6 +8,7 @@ if [ "$?" -eq 0 ];
 then
 	echo "TESTING: firecfg (test/root/firecfg.exp)"
 	rm -fr /home/netblue/.local/share/applications
+	rm /etc/firejail/firejail.users
 	./firecfg.exp
 	cp /home/netblue/config/*.desktop /home/netblue/.local/share/applications/.
 else

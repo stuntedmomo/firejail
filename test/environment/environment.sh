@@ -44,7 +44,7 @@ fi
 which csh
 if [ "$?" -eq 0 ];
 then
-        echo "TESTING: dash (test/environment/csh.exp)"
+        echo "TESTING: csh (test/environment/csh.exp)"
         ./csh.exp
 else
         echo "TESTING SKIP: csh not found"
@@ -53,7 +53,7 @@ fi
 which zsh
 if [ "$?" -eq 0 ];
 then
-        echo "TESTING: dash (test/environment/zsh.exp)"
+        echo "TESTING: zsh (test/environment/zsh.exp)"
         ./csh.exp
 else
         echo "TESTING SKIP: zsh not found"
@@ -73,15 +73,6 @@ fi
 
 echo "TESTING: quiet (test/environment/quiet.exp)"
 ./quiet.exp
-
-which strace
-if [ "$?" -eq 0 ];
-then
-        echo "TESTING: --allow-debuggers (test/environment/allow-debuggers.exp)"
-        ./allow-debuggers.exp
-else
-        echo "TESTING SKIP: strace not found"
-fi
 
 # to install ibus:
 #       $ sudo apt-get install ibus-table-array30
