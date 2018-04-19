@@ -737,9 +737,6 @@ int main(int argc, char **argv) {
 			arg_quiet = 1;
 			arg_debug = 0;
 		}
-		else if (strcmp(argv[i], "--allow-debuggers") == 0) {
-			// already handled
-		}
 
 		//*************************************
 		// filtering

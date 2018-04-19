@@ -1,7 +1,7 @@
 all: apps man filters
 MYLIBS = src/lib
 APPS = src/firejail src/firemon src/fsec-print src/fsec-optimize src/firecfg src/fnetfilter src/fnet src/fseccomp src/libpostexecseccomp
-MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-login.5 firejail-users.5
+MANPAGES = firejail.1 firemon.1 firecfg.1 firejail-profile.5 firejail-users.5
 SECCOMP_FILTERS = seccomp seccomp.32 seccomp.64 seccomp.block_secondary seccomp.mdwx
 
 prefix=@prefix@
@@ -122,7 +122,6 @@ endif
 	for file in .etc/* etc/firejail.config; do \
 		install -c -m 0644 $$file $(DESTDIR)/$(sysconfdir)/firejail; \
 	done
-	sh -c "if [ ! -f $(DESTDIR)/$(sysconfdir)/firejail/login.users ]; then install -c -m 0644 etc/login.users $(DESTDIR)/$(sysconfdir)/firejail/.; fi;"
 	rm -fr .etc
 ifeq ($(HAVE_APPARMOR),-DHAVE_APPARMOR)
 	# install apparmor profile
