@@ -72,7 +72,6 @@
 #define RUN_DEV_DIR		"/run/firejail/mnt/dev"
 #define RUN_DEVLOG_FILE	"/run/firejail/mnt/devlog"
 
-#define RUN_WHITELIST_X11_DIR	"/run/firejail/mnt/orig-x11"
 #define RUN_WHITELIST_HOME_DIR	"/run/firejail/mnt/orig-home"	// default home directory masking
 #define RUN_WHITELIST_HOME_USER_DIR	"/run/firejail/mnt/orig-home-user"	// home directory whitelisting
 #define RUN_WHITELIST_TMP_DIR	"/run/firejail/mnt/orig-tmp"
@@ -387,13 +386,10 @@ void fs_noexec(const char *dir);
 void fs_proc_sys_dev_boot(void);
 // build a basic read-only filesystem
 void fs_basic_fs(void);
-// mount overlayfs on top of / directory
-char *fs_check_overlay_dir(const char *subdirname, int allow_reuse);
-void fs_overlayfs(void);
-// chroot into an existing directory; mount exiting /dev and update /etc/resolv.conf
-void fs_chroot(const char *rootdir);
-void fs_check_chroot_dir(const char *rootdir);
+// private /tmp directory
 void fs_private_tmp(void);
+// disable-mnt
+void fs_mnt(void);
 
 // profile.c
 // find and read the profile specified by name from dir directory
@@ -406,7 +402,6 @@ void profile_read(const char *fname);
 int profile_check_line(char *ptr, int lineno, const char *fname);
 // add a profile entry in cfg.profile list; use str to populate the list
 void profile_add(char *str);
-void fs_mnt(void);
 
 // list.c
 void list(void);
@@ -422,9 +417,6 @@ void join(pid_t pid, int argc, char **argv, int index);
 
 // shutdown.c
 void shut(pid_t pid);
-
-// restricted_shell.c
-int restricted_shell(const char *user);
 
 // arp.c
 void arp_announce(const char *dev, Bridge *br);
@@ -502,8 +494,6 @@ void fs_private_template(void);
 void fs_check_private_dir(void);
 // check new private template home directory (--private-template= option) exit if it fails
 void fs_check_private_template(void);
-void fs_private_home_list(void);
-
 
 // seccomp.c
 char *seccomp_check_list(const char *str);
@@ -524,9 +514,6 @@ void caps_keep_list(const char *clist);
 void caps_print_filter(pid_t pid);
 void caps_drop_dac_override(void);
 
-// syscall.c
-const char *syscall_find_nr(int nr);
-
 // fs_trace.c
 void fs_trace_preload(void);
 void fs_trace(void);
@@ -537,21 +524,6 @@ void fs_resolvconf(void);
 char *fs_check_hosts_file(const char *fname);
 void fs_store_hosts_file(void);
 void fs_mount_hosts_file(void);
-
-// rlimit.c
-void set_rlimits(void);
-
-// cpu.c
-void read_cpu_list(const char *str);
-void set_cpu_affinity(void);
-void load_cpu(const char *fname);
-void save_cpu(void);
-void cpu_print_filter(pid_t pid);
-
-// cgroup.c
-void save_cgroup(void);
-void load_cgroup(const char *fname);
-void set_cgroup(const char *path);
 
 // netfilter.c
 void check_netfilter_file(const char *fname);
@@ -567,10 +539,6 @@ void netns_mounts(const char *nsname);
 // bandwidth.c
 void bandwidth_pid(pid_t pid, const char *command, const char *dev, int down, int up);
 void network_set_run_file(pid_t pid);
-
-// fs_etc.c
-void fs_machineid(void);
-void fs_private_dir_list(const char *private_dir, const char *private_run_dir, const char *private_list);
 
 // no_sandbox.c
 int check_namespace_virt(void);
@@ -594,12 +562,6 @@ void fs_whitelist(void);
 // pulseaudio.c
 void pulseaudio_init(void);
 void pulseaudio_disable(void);
-
-// fs_bin.c
-void fs_private_bin_list(void);
-
-// fs_lib.c
-void fs_private_lib(void);
 
 // protocol.c
 void protocol_filter_save(void);
@@ -674,7 +636,6 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 #define PATH_FSECCOMP (LIBDIR "/firejail/fseccomp")
 #define PATH_FSEC_PRINT (LIBDIR "/firejail/fsec-print")
 #define PATH_FSEC_OPTIMIZE (LIBDIR "/firejail/fsec-optimize")
-//#define PATH_FCOPY (LIBDIR "/firejail/fcopy")
 #define SBOX_STDIN_FILE "/run/firejail/mnt/sbox_stdin"
 #define PATH_FLDD (LIBDIR "/firejail/fldd")
 
@@ -694,10 +655,6 @@ int sbox_run(unsigned filter, int num, ...);
 void delete_run_files(pid_t pid);
 void delete_bandwidth_run_file(pid_t pid);
 void set_name_run_file(pid_t pid);
-void set_x11_run_file(pid_t pid, int display);
 void set_profile_run_file(pid_t pid, const char *fname);
-
-// dbus.c
-void dbus_session_disable(void);
 
 #endif

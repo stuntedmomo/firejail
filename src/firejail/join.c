@@ -28,7 +28,6 @@
 static int apply_caps = 0;
 static uint64_t caps = 0;
 static int apply_seccomp = 0;
-static unsigned display = 0;
 #define BUFLEN 4096
 
 static void signal_handler(int sig){
@@ -265,15 +264,8 @@ void join(pid_t pid, int argc, char **argv, int index) {
 				caps_set(caps);
 		}
 
-		// set environment, add x11 display
+		// set environment
 		env_defaults();
-		if (display) {
-			char *display_str;
-			if (asprintf(&display_str, ":%d", display) == -1)
-				errExit("asprintf");
-			setenv("DISPLAY", display_str, 1);
-			free(display_str);
-		}
 
 		if (cfg.command_line == NULL) {
 			assert(cfg.shell);

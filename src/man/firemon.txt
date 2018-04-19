@@ -59,10 +59,6 @@ Print a tree of all sandboxed processes.
 \fB\-\-version
 Print program version and exit.
 
-.TP
-\fB\-\-x11
-Print X11 display number.
-
 .PP
 The format for each listed sandbox entry is as follows:
 
