@@ -4,8 +4,6 @@ Firemon \- Monitoring program for processes started in a Firejail sandbox.
 .SH SYNOPSIS
 firemon [OPTIONS] [PID]
 .SH DESCRIPTION
-This is the manual page for the long term support version of Firejail.
-
 Firemon monitors programs started in a Firejail sandbox.
 Without a PID specified, all processes started by Firejail are monitored. Descendants of
 these processes are also being monitored. On Grsecurity systems only root user

@@ -26,8 +26,6 @@ Miscellaneous:
 firejail {\-? | \-\-debug-caps | \-\-debug-errnos | \-\-debug-syscalls | \-\-debug-protocols | \-\-help | \-\-version}
 .RE
 .SH DESCRIPTION
-This is the manual page for the long term support version of Firejail.
-.PP
 Firejail is a SUID sandbox program that reduces the risk of security breaches by
 restricting the running environment of untrusted applications using Linux
 namespaces, seccomp-bpf and Linux capabilities.
