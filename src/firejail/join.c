@@ -225,6 +225,8 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		}
 
 		prctl(PR_SET_PDEATHSIG, SIGKILL, 0, 0, 0); // kill the child in case the parent died
+
+		EUID_USER();
 		if (chdir("/") < 0)
 			errExit("chdir");
 		if (homedir) {
@@ -237,6 +239,7 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		}
 
 		// set caps filter
+		EUID_ROOT();
 		if (apply_caps == 1)	// not available for uid 0
 			caps_set(caps);
 #ifdef HAVE_SECCOMP
@@ -265,6 +268,8 @@ void join(pid_t pid, int argc, char **argv, int index) {
 		}
 
 		// set environment
+		EUID_USER();
+
 		env_defaults();
 
 		if (cfg.command_line == NULL) {
