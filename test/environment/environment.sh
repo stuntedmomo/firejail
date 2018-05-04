@@ -13,9 +13,6 @@ echo "TESTING: timeout (test/environment/timeout.exp)"
 echo "TESTING: DNS (test/environment/dns.exp)"
 ./dns.exp
 
-echo "TESTING: machine-id (test/environment/machineid.exp)"
-./machineid.exp
-
 echo "TESTING: hosts file (test/environment/hostfile.exp)"
 ./hostfile.exp
 
@@ -25,9 +22,6 @@ touch -- -testdir/ttt
 cp -- /bin/bash -testdir/.
 ./doubledash.exp
 rm -fr -- -testdir
-
-echo "TESTING: output (test/environment/output.exp)"
-./output.exp
 
 echo "TESTING: extract command (extract_command.exp)"
 ./extract_command.exp

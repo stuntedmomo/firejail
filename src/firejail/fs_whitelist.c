@@ -414,7 +414,6 @@ void fs_whitelist(void) {
 
 		// valid path referenced to filesystem root
 		if (*new_name != '/') {
-			if (arg_debug || arg_debug_whitelists)
 			if (arg_debug)
 				fprintf(stderr, "Debug %d: \n", __LINE__);
 			goto errexit;
