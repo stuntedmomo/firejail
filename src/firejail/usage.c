@@ -82,6 +82,7 @@ static char *usage_str =
 	"    --join-network=name|pid - join the network namespace.\n"
 #endif
 	"    --join-or-start=name|pid - join the sandbox or start a new one.\n"
+	"    --keep-var-tmp - /var/tmp directory is untouched.\n"
 	"    --list - list all sandboxes.\n"
 #ifdef HAVE_NETWORK
 	"    --mac=xx:xx:xx:xx:xx:xx - set interface MAC address.\n"
@@ -187,7 +188,6 @@ static char *usage_str =
 	"    --writable-run-user - allow access to /run/user/$UID/systemd and\n"
 	"\t/run/user/$UID/gnupg.\n"
 	"    --writable-var - /var directory is mounted read-write.\n"
-	"    --keep-var-tmp - /var/tmp directory is untouched.\n"
 	"    --writable-var-log - use the real /var/log directory, not a clone.\n"
 	"\n"
 	"Examples:\n"
