@@ -27,6 +27,12 @@
 #include <fcntl.h>
 #include <errno.h>
 
+// mountinfo functionality test;
+// 1. enable TEST_MOUNTINFO definition
+// 2. set a symlink in /tmp: ln -s /etc /tmp/etc
+// 3. run firejail --debug --whitelist=/tmp/etc
+//#define TEST_MOUNTINFO
+
 static char *dentry[] = {
 	"Downloads",
 	"Загрузки",
@@ -37,6 +43,7 @@ static char *dentry[] = {
 #define EMPTY_STRING ("")
 #define MAXBUF 4098
 static char *resolve_downloads(int nowhitelist_flag) {
+	EUID_ASSERT();
 	char *fname;
 	struct stat s;
 
@@ -203,8 +210,10 @@ static void whitelist_path(ProfileEntry *entry) {
 	}
 	else if (entry->tmp_dir) {
 		fname = path + 5; // strlen("/tmp/")
+#ifndef TEST_MOUNTINFO
 		if (*fname == '\0')
 			goto errexit;
+#endif
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_TMP_DIR, fname) == -1)
 			errExit("asprintf");
@@ -316,6 +325,16 @@ static void whitelist_path(ProfileEntry *entry) {
 	if (mount(wfile, path, NULL, MS_BIND|MS_REC, NULL) < 0)
 		errExit("mount bind");
 
+	// check the last mount operation
+	MountData *mptr = get_last_mount(); // will do exit(1) if the mount cannot be found
+
+	// No mounts are allowed on top level directories. A destination such as "/etc" is very bad!
+	//  - there should be more than one '/' char in dest string
+	if (mptr->dir == strrchr(mptr->dir, '/')) {
+		fprintf(stderr, "Error: invalid mount on top of %s\n", mptr->dir);
+		exit(1);
+	}
+
 	free(wfile);
 	return;
 
@@ -352,6 +371,7 @@ void fs_whitelist(void) {
 		errExit("failed allocating memory for nowhitelist entries");
 
 	// verify whitelist files, extract symbolic links, etc.
+	EUID_USER();
 	while (entry) {
 		int nowhitelist_flag = 0;
 
@@ -394,6 +414,7 @@ void fs_whitelist(void) {
 
 		// valid path referenced to filesystem root
 		if (*new_name != '/') {
+			if (arg_debug || arg_debug_whitelists)
 			if (arg_debug)
 				fprintf(stderr, "Debug %d: \n", __LINE__);
 			goto errexit;
@@ -502,10 +523,13 @@ void fs_whitelist(void) {
 		else if (strncmp(new_name, "/tmp/", 5) == 0) {
 			entry->tmp_dir = 1;
 			tmp_dir = 1;
+
+#ifndef TEST_MOUNTINFO
 			// both path and absolute path are under /tmp
 			if (strncmp(fname, "/tmp/", 5) != 0) {
 				goto errexit;
 			}
+#endif
 		}
 		else if (strncmp(new_name, "/media/", 7) == 0) {
 			entry->media_dir = 1;
@@ -641,6 +665,7 @@ void fs_whitelist(void) {
 	assert(nowhitelist);
 	free(nowhitelist);
 
+	EUID_ROOT();
 	// /home/user
 	if (home_dir) {
 		// keep a copy of real home dir in RUN_WHITELIST_HOME_USER_DIR
@@ -854,6 +879,15 @@ void fs_whitelist(void) {
 						fprintf(stderr, "Warning cannot create symbolic link %s\n", entry->link);
 					else if (arg_debug)
 						printf("Created symbolic link %s -> %s\n", entry->link, entry->data + 10);
+
+					// check again for files in /tmp directory
+					if (strncmp(entry->link, "/tmp/", 5) == 0) {
+						char *path = realpath(entry->link, NULL);
+						if (path == NULL || strncmp(path, "/tmp/", 5) != 0) {
+							fprintf(stderr, "Error: invalid symbolic link %s\n", entry->link);
+							exit(1);
+						}
+					}
 				}
 			}
 		}
