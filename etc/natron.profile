@@ -5,6 +5,12 @@ include /etc/firejail/natron.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
+# Allow access to python
+noblacklist ${PATH}/python2*
+noblacklist ${PATH}/python3*
+noblacklist /usr/lib/python2*
+noblacklist /usr/lib/python3*
+
 noblacklist ${HOME}/.Natron
 noblacklist ${HOME}/.cache/INRIA/Natron
 noblacklist ${HOME}/.config/INRIA

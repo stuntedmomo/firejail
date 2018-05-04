@@ -27,7 +27,7 @@ apparmor
 caps.drop all
 machine-id
 netfilter
-nodbus
+#nodbus
 nodvd
 nogroups
 nonewprivs
