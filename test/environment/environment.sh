@@ -13,6 +13,9 @@ echo "TESTING: timeout (test/environment/timeout.exp)"
 echo "TESTING: DNS (test/environment/dns.exp)"
 ./dns.exp
 
+echo "TESTING: machine-id (test/environment/machineid.exp)"
+./machineid.exp
+
 echo "TESTING: hosts file (test/environment/hostfile.exp)"
 ./hostfile.exp
 
@@ -23,6 +26,9 @@ cp -- /bin/bash -testdir/.
 ./doubledash.exp
 rm -fr -- -testdir
 
+echo "TESTING: output (test/environment/output.exp)"
+./output.exp
+
 echo "TESTING: extract command (extract_command.exp)"
 ./extract_command.exp
 
@@ -32,7 +38,7 @@ echo "TESTING: environment variables (test/environment/env.exp)"
 echo "TESTING: shell none(test/environment/shell-none.exp)"
 ./shell-none.exp
 
-which dash
+which dash 2>/dev/null
 if [ "$?" -eq 0 ];
 then
         echo "TESTING: dash (test/environment/dash.exp)"
@@ -41,7 +47,7 @@ else
         echo "TESTING SKIP: dash not found"
 fi
 
-which csh
+which csh 2>/dev/null
 if [ "$?" -eq 0 ];
 then
         echo "TESTING: csh (test/environment/csh.exp)"
@@ -50,11 +56,11 @@ else
         echo "TESTING SKIP: csh not found"
 fi
 
-which zsh
+which zsh 2>/dev/null
 if [ "$?" -eq 0 ];
 then
         echo "TESTING: zsh (test/environment/zsh.exp)"
-        ./csh.exp
+        ./zsh.exp
 else
         echo "TESTING SKIP: zsh not found"
 fi
@@ -62,7 +68,7 @@ fi
 echo "TESTING: firejail in firejail - single sandbox (test/environment/firejail-in-firejail.exp)"
 ./firejail-in-firejail.exp
 
-which aplay
+which aplay 2>/dev/null
 if [ "$?" -eq 0 ];
 then
         echo "TESTING: sound (test/environment/sound.exp)"

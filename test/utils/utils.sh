@@ -10,7 +10,7 @@ if [ -f /etc/debian_version ]; then
 	libdir=$(dirname "$(dpkg -L firejail | grep faudit)")
 	export PATH="$PATH:$libdir"
 fi
-export PATH="$PATH:/usr/lib/firejail"
+export PATH="$PATH:/usr/lib/firejail:/usr/lib64/firejail"
 
 echo "TESTING: name (test/utils/name.exp)"
 ./name.exp
@@ -27,7 +27,7 @@ echo "TESTING: version (test/utils/version.exp)"
 echo "TESTING: help (test/utils/help.exp)"
 ./help.exp
 
-which man
+which man 2>/dev/null
 if [ "$?" -eq 0 ];
 then
         echo "TESTING: man (test/utils/man.exp)"
