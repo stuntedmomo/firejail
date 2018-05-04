@@ -320,6 +320,7 @@ extern int arg_join_filesystem;	// join only the mount namespace
 extern int arg_ipc;		// enable ipc namespace
 extern int arg_writable_etc;	// writable etc
 extern int arg_writable_var;	// writable var
+extern int arg_keep_var_tmp; // don't overwrite /var/tmp
 extern int arg_writable_run_user;	// writable /run/user
 extern int arg_writable_var_log; // writable /var/log
 extern int arg_appimage;	// appimage

@@ -655,6 +655,8 @@ void fs_basic_fs(void) {
 	// update /var directory in order to support multiple sandboxes running on the same root directory
 	fs_var_lock();
 	fs_var_tmp();
+	if (!arg_keep_var_tmp)
+	        fs_var_tmp();
 	if (!arg_writable_var_log)
 		fs_var_log();
 	else

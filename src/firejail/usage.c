@@ -187,6 +187,7 @@ static char *usage_str =
 	"    --writable-run-user - allow access to /run/user/$UID/systemd and\n"
 	"\t/run/user/$UID/gnupg.\n"
 	"    --writable-var - /var directory is mounted read-write.\n"
+	"    --keep-var-tmp - /var/tmp directory is untouched.\n"
 	"    --writable-var-log - use the real /var/log directory, not a clone.\n"
 	"\n"
 	"Examples:\n"
