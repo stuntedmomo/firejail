@@ -651,13 +651,14 @@ void build_appimage_cmdline(char **command_line, char **window_title, int argc, 
 #define PATH_FLDD (LIBDIR "/firejail/fldd")
 
 // bitmapped filters for sbox_run
-#define SBOX_ROOT (1 << 0)			// run the sandbox as root
-#define SBOX_USER (1 << 1)			// run the sandbox as a regular user
+#define SBOX_ROOT (1 << 0)		// run the sandbox as root
+#define SBOX_USER (1 << 1)		// run the sandbox as a regular user
 #define SBOX_SECCOMP (1 << 2)		// install seccomp
 #define SBOX_CAPS_NONE (1 << 3)		// drop all capabilities
 #define SBOX_CAPS_NETWORK (1 << 4)	// caps filter for programs running network programs
 #define SBOX_ALLOW_STDIN (1 << 5)		// don't close stdin
 #define SBOX_STDIN_FROM_FILE (1 << 6)	// open file and redirect it to stdin
+#define SBOX_CAPS_HIDEPID (1 << 7)		// hidepid caps filter for running firemon
 
 // run sbox
 int sbox_run(unsigned filter, int num, ...);
