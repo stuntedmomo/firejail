@@ -33,6 +33,26 @@
 
 #define MAX_GROUPS 1024
 
+// send the error to /var/log/auth.log and exit after a small delay
+void errLogExit(char* fmt, ...) {
+	va_list args;
+	va_start(args,fmt);
+	openlog("firejail", LOG_NDELAY | LOG_PID, LOG_AUTH);
+	MountData *m = get_last_mount();
+
+	char *msg1;
+	char *msg2;
+	if (vasprintf(&msg1, fmt, args) != -1 &&
+	    asprintf(&msg2, "Access error: pid %d, last mount name:%s dir:%s type:%s - %s", getuid(), m->fsname, m->dir, m->fstype, msg1) != -1)
+		syslog(LOG_CRIT, "%s", msg2);
+	va_end(args);
+	closelog();
+
+	sleep(2);
+	fprintf(stderr, "%s\n", msg2);
+	exit(1);
+}
+
 static void clean_supplementary_groups(gid_t gid) {
 	assert(cfg.username);
 	gid_t groups[MAX_GROUPS];

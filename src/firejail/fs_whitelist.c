@@ -196,6 +196,7 @@ static void whitelist_path(ProfileEntry *entry) {
 	const char *fname;
 	char *wfile = NULL;
 
+	EUID_USER();
 	if (entry->home_dir) {
 		if (strncmp(path, cfg.homedir, strlen(cfg.homedir)) == 0) {
 			fname = path + strlen(cfg.homedir);
@@ -212,7 +213,7 @@ static void whitelist_path(ProfileEntry *entry) {
 		fname = path + 5; // strlen("/tmp/")
 #ifndef TEST_MOUNTINFO
 		if (*fname == '\0')
-			goto errexit;
+			errLogExit("whitelisting /tmp problem");
 #endif
 
 		if (asprintf(&wfile, "%s/%s", RUN_WHITELIST_TMP_DIR, fname) == -1)
@@ -290,9 +291,12 @@ static void whitelist_path(ProfileEntry *entry) {
 		if (arg_debug)
 			printf("Whitelisting %s\n", path);
 	}
-	else
+	else {
+		EUID_ROOT();
 		return;
+	}
 
+	EUID_ROOT();
 	// create the path if necessary
 	mkpath(path, s.st_mode);
 	fs_logger2("whitelist", path);
@@ -330,10 +334,8 @@ static void whitelist_path(ProfileEntry *entry) {
 
 	// No mounts are allowed on top level directories. A destination such as "/etc" is very bad!
 	//  - there should be more than one '/' char in dest string
-	if (mptr->dir == strrchr(mptr->dir, '/')) {
-		fprintf(stderr, "Error: invalid mount on top of %s\n", mptr->dir);
-		exit(1);
-	}
+	if (mptr->dir == strrchr(mptr->dir, '/'))
+		errLogExit("invalid whitelist mount\n");
 
 	free(wfile);
 	return;
@@ -882,10 +884,9 @@ void fs_whitelist(void) {
 					// check again for files in /tmp directory
 					if (strncmp(entry->link, "/tmp/", 5) == 0) {
 						char *path = realpath(entry->link, NULL);
-						if (path == NULL || strncmp(path, "/tmp/", 5) != 0) {
-							fprintf(stderr, "Error: invalid symbolic link %s\n", entry->link);
-							exit(1);
-						}
+						if (path == NULL || strncmp(path, "/tmp/", 5) != 0)
+							errLogExit("invalid whitelist symlink %s\n", entry->link);
+						free(path);
 					}
 				}
 			}
