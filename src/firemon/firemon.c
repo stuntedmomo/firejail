@@ -25,6 +25,7 @@
 #include <grp.h>
 #include <sys/stat.h>
 
+pid_t skip_process = 0;
 static int arg_route = 0;
 static int arg_arp = 0;
 static int arg_tree = 0;
@@ -210,6 +211,13 @@ int main(int argc, char **argv) {
 			break;
 		}
 	}
+
+
+	// if the parent is firejail, skip the process
+	pid_t ppid = getppid();
+	char *pcomm = pid_proc_comm(ppid);
+	if (pcomm && strcmp(pcomm, "firejail") == 0)
+		skip_process = ppid;
 
 	// allow only root user if /proc is mounted hidepid
 	if (pid_hidepid() && getuid() != 0) {
