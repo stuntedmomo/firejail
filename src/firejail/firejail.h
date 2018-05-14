@@ -200,6 +200,7 @@ typedef struct profile_entry_t {
 	unsigned srv_dir:1;	// whitelist in /srv directory
 	unsigned etc_dir:1;	// whitelist in /etc directory
 	unsigned share_dir:1;	// whitelist in /usr/share directory
+	unsigned module_dir:1;	// whitelist in /sys/module directory
 }ProfileEntry;
 
 typedef struct config_t {

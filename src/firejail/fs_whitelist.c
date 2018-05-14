@@ -873,7 +873,7 @@ void fs_whitelist(void) {
 				errExit("mount bind");
 
 			// mount tmpfs on /sys/module
-			if (arg_debug || arg_debug_whitelists)
+			if (arg_debug)
 				printf("Mounting tmpfs on /sys/module directory\n");
 			if (mount("tmpfs", "/sys/module", "tmpfs", MS_NOSUID | MS_STRICTATIME | MS_REC,  "mode=755,gid=0") < 0)
 				errExit("mounting tmpfs on /sys/module");
