@@ -438,29 +438,44 @@ void fs_rdonly(const char *dir) {
 
 static void fs_rdwr(const char *dir) {
 	assert(dir);
-	// check directory exists
+	// check directory exists and ensure we have a resolved path
+	// the resolved path allows to run a sanity check after the mount
+	char *path = realpath(dir, NULL);
+	if (path == NULL)
+		return;
+	// allow only user owned directories, except the user is root
+	uid_t u = getuid();
 	struct stat s;
-	int rv = stat(dir, &s);
-	if (rv == 0) {
-		// if the file is outside /home directory, allow only root user
-		uid_t u = getuid();
-		if (u != 0 && s.st_uid != u) {
-			fwarning("you are not allowed to change %s to read-write\n", dir);
-			return;
-		}
-
-		// mount --bind /bin /bin
-		// mount --bind -o remount,rw /bin
-		unsigned long flags = 0;
-		get_mount_flags(dir, &flags);
-		if ((flags & MS_RDONLY) == 0)
-			return;
-		flags &= ~MS_RDONLY;
-		if (mount(dir, dir, NULL, MS_BIND|MS_REC, NULL) < 0 ||
-		    mount(NULL, dir, NULL, flags|MS_BIND|MS_REMOUNT|MS_REC, NULL) < 0)
-			errExit("mount read-write");
-		fs_logger2("read-write", dir);
+	int rv = stat(path, &s);
+	if (rv) {
+		free(path);
+		return;
 	}
+	if (u != 0 && s.st_uid != u) {
+		fwarning("you are not allowed to change %s to read-write\n", path);
+		free(path);
+		return;
+	}
+	// mount --bind /bin /bin
+	// mount --bind -o remount,rw /bin
+	unsigned long flags = 0;
+	get_mount_flags(path, &flags);
+	if ((flags & MS_RDONLY) == 0) {
+		free(path);
+		return;
+	}
+	flags &= ~MS_RDONLY;
+	if (mount(path, path, NULL, MS_BIND|MS_REC, NULL) < 0 ||
+	    mount(NULL, path, NULL, flags|MS_BIND|MS_REMOUNT|MS_REC, NULL) < 0)
+		errExit("mount read-write");
+	fs_logger2("read-write", path);
+
+	// run a check on /proc/self/mountinfo to validate the mount
+	MountData *mptr = get_last_mount();
+	if (strncmp(mptr->dir, path, strlen(path)) != 0)
+		errLogExit("invalid read-write mount");
+
+	free(path);
 }
 
 void fs_noexec(const char *dir) {
@@ -519,12 +534,12 @@ void fs_proc_sys_dev_boot(void) {
 
 	disable_file(BLACKLIST_FILE, "/sys/firmware");
 	disable_file(BLACKLIST_FILE, "/sys/hypervisor");
-	{ // allow user access to /sys/fs if "--noblacklist=/sys/fs" is present on the command line
+	{ // allow user access to some directories in /sys/ by specifying 'noblacklist' option
 		EUID_USER();
 		profile_add("blacklist /sys/fs");
+		profile_add("blacklist /sys/module");
 		EUID_ROOT();
 	}
-	disable_file(BLACKLIST_FILE, "/sys/module");
 	disable_file(BLACKLIST_FILE, "/sys/power");
 	disable_file(BLACKLIST_FILE, "/sys/kernel/debug");
 	disable_file(BLACKLIST_FILE, "/sys/kernel/vmcoreinfo");
