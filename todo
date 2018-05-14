@@ -1,0 +1,59 @@
+done merges
+- firejail-profile.txt - done
+- firejail.txt - done
+
+done Merge pull request #1932 from RDProjekt/modules
+- firejail.h - done
+- fs.c - done
+- fs_whitelist.c - done
+
+done harden read-write mounts, cleanup
+- fs.c - done
+- pulseaudio.c - done
+- x11.c
+
+done - firemon/prctl enhancements
+- firemon/procevent.c - done
+
+done - testing hidepid
+- test/hidepid-howto
+
+done - fix /proc hidepid
+- firejail.h
+- main.c
+- sbox.c
+
+done - lower some more privs
+- fs_whitelist.c done
+
+done - don't display firejail --list/--tree/--top processes in firemon stats
+- firemon/firemon.c - done
+- firemon/firemon.h - done
+- firemon/list.c - done
+- firemon/top.c - done
+- firemon/tree.c - done
+
+done - more errLogExit
+- firejail.h - done
+- fs_whitelist.c - done
+- pulseaudio.c - done
+- util.c - done
+
+done - errLogExit and --overlay-clean
+- util.c - done
+
+done - fix naming of xplayer-video-thumbnailer profile
+
+done - remove 64bit seccomp filter from 32bit architectures
+
+done - tiny memleaks, np dereference
+- firecfg/desktop_files.c - done
+
+done - get error handling right
+- pulseaudio.c - done
+
+done - enhance post-mount checks
+- pulseaudio.c - done
+
+
+done - moving get_mount_info from /proc/self/mounts to /proc/slef/mountinfo
