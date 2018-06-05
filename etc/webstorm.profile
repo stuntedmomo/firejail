@@ -1,24 +1,27 @@
-# Firejail profile for android-studio
+# Firejail profile for WebStorm
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/android-studio.local
+include /etc/firejail/webstorm.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ${HOME}/.AndroidStudio*
+noblacklist ${HOME}/.WebStorm*
 noblacklist ${HOME}/.android
 noblacklist ${HOME}/.gitconfig
 noblacklist ${HOME}/.gradle
-noblacklist ${HOME}/.jack-server
-noblacklist ${HOME}/.jack-settings
 noblacklist ${HOME}/.java
 noblacklist ${HOME}/.local/share/JetBrains
 noblacklist ${HOME}/.ssh
 noblacklist ${HOME}/.tooling
 
+noblacklist ${PATH}/node
+noblacklist ${HOME}/.nvm
+
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
+include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 
 caps.drop all
 netfilter
@@ -32,7 +35,5 @@ protocol unix,inet,inet6
 seccomp
 shell none
 
-# private-tmp
-
-# noexec /tmp breaks 'Android Profiler'
-#noexec /tmp
+private-dev
+private-tmp

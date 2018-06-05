@@ -1,37 +1,34 @@
-# Firejail profile for zathura
+# Firejail profile for qmmp
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/zathura.local
+include /etc/firejail/qmmp.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ${HOME}/.config/zathura
-noblacklist ${HOME}/.local/share/zathura
+noblacklist ${HOME}/.qmmp
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
-include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
 caps.drop all
-machine-id
-# net none
-# nodbus
-nodvd
+netfilter
+# no3d
+nodbus
 nogroups
 nonewprivs
 noroot
-nosound
 notv
-protocol unix
+novideo
+protocol unix,inet,inet6
 seccomp
 shell none
+tracelog
 
-private-bin zathura
+private-bin qmmp,tar,unzip,bzip2,gzip
 private-dev
-private-etc fonts,machine-id
 private-tmp
 
-read-only ${HOME}/
-read-write ${HOME}/.local/share/zathura/
+noexec ${HOME}
+noexec /tmp

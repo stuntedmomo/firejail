@@ -1,11 +1,13 @@
-# Firejail profile for evince
+# Firejail profile for ppsspp
 # This file is overwritten after every install/update
 # Persistent local customizations
-include /etc/firejail/evince.local
+include /etc/firejail/ppsspp.local
 # Persistent global definitions
 include /etc/firejail/globals.local
 
-noblacklist ${HOME}/.config/evince
+noblacklist ${HOME}/.config/ppsspp
+# with >=llvm-4 mesa drivers need llvm stuff
+noblacklist /usr/lib/llvm*
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
@@ -16,31 +18,25 @@ include /etc/firejail/disable-programs.inc
 include /etc/firejail/whitelist-var-common.inc
 
 caps.drop all
-machine-id
-# net none breaks AppArmor on Ubuntu systems
+ipc-namespace
 netfilter
-no3d
-# nodbus
+net none
+nodbus
 nodvd
 nogroups
 nonewprivs
 noroot
-nosound
 notv
 novideo
-protocol unix
+protocol unix,netlink
 seccomp
 shell none
-tracelog
 
-private-bin evince,evince-previewer,evince-thumbnailer
-private-dev
-private-etc fonts
-
-private-lib evince,gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libdjvulibre.so.*,libgconf-2.so.*,libpoppler-glib.so.*,librsvg-2.so.*
-
+# private-dev is disabled to allow controller support
+#private-dev
+private-etc asound.conf,ca-certificates,drirc,fonts,group,host.conf,hostname,hosts,ld.so.cache,ld.so.preload,localtime,nsswitch.conf,passwd,pulse,resolv.conf,ssl,pki,crypto-policies
+private-opt ppsspp
 private-tmp
 
-#memory-deny-write-execute - breaks application on Archlinux, issue 1803
 noexec ${HOME}
 noexec /tmp

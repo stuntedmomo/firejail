@@ -8,6 +8,7 @@ blacklist ${HOME}/.*coin
 blacklist ${HOME}/.8pecxstudios
 blacklist ${HOME}/.AndroidStudio*
 blacklist ${HOME}/.Atom
+blacklist ${HOME}/.CLion*
 blacklist ${HOME}/.FBReader
 blacklist ${HOME}/.FontForge
 blacklist ${HOME}/.IdeaIC*
@@ -15,6 +16,7 @@ blacklist ${HOME}/.LuminanceHDR
 blacklist ${HOME}/.Mathematica
 blacklist ${HOME}/.Natron
 blacklist ${HOME}/.PyCharm*
+blacklist ${HOME}/.Sayonara
 blacklist ${HOME}/.Skype
 blacklist ${HOME}/.Steam
 blacklist ${HOME}/.Steampath
@@ -22,10 +24,12 @@ blacklist ${HOME}/.Steampid
 blacklist ${HOME}/.TelegramDesktop
 blacklist ${HOME}/.ViberPC
 blacklist ${HOME}/.VirtualBox
+blacklist ${HOME}/.WebStorm*
 blacklist ${HOME}/.Wolfram Research
 blacklist ${HOME}/.ZAP
 blacklist ${HOME}/.aMule
 blacklist ${HOME}/.android
+blacklist ${HOME}/.anydesk
 blacklist ${HOME}/.arduino15
 blacklist ${HOME}/.arm
 blacklist ${HOME}/.asunder_album_genre
@@ -106,6 +110,8 @@ blacklist ${HOME}/.config/deadbeef
 blacklist ${HOME}/.config/deluge
 blacklist ${HOME}/.config/digikam
 blacklist ${HOME}/.config/digikamrc
+blacklist ${HOME}/.config/discord
+blacklist ${HOME}/.config/discordcanary
 blacklist ${HOME}/.config/dolphinrc
 blacklist ${HOME}/.config/dragonplayerrc
 blacklist ${HOME}/.config/emaildefaults
@@ -188,6 +194,7 @@ blacklist ${HOME}/.config/Pinta
 blacklist ${HOME}/.config/pitivi
 blacklist ${HOME}/.config/pix
 blacklist ${HOME}/.config/pluma
+blacklist ${HOME}/.config/ppsspp
 blacklist ${HOME}/.config/psi+
 blacklist ${HOME}/.config/qBittorrent
 blacklist ${HOME}/.config/qBittorrentrc
@@ -344,7 +351,6 @@ blacklist ${HOME}/.kodi
 blacklist ${HOME}/.linphone-history.db
 blacklist ${HOME}/.linphonerc
 blacklist ${HOME}/.lmmsrc.xml
-blacklist ${HOME}/.local/lib/python2.7/site-packages
 blacklist ${HOME}/.local/share/0ad
 blacklist ${HOME}/.local/share/3909/PapersPlease
 blacklist ${HOME}/.local/share/Empathy
@@ -462,6 +468,7 @@ blacklist ${HOME}/.passwd-s3fs
 blacklist ${HOME}/.pingus
 blacklist ${HOME}/.purple
 blacklist ${HOME}/.qemu-launcher
+blacklist ${HOME}/.qmmp
 blacklist ${HOME}/.redeclipse
 blacklist ${HOME}/.remmina
 blacklist ${HOME}/.repo_.gitconfig.json
@@ -502,6 +509,7 @@ blacklist ${HOME}/.wine
 blacklist ${HOME}/.wireshark
 blacklist ${HOME}/.wine64
 blacklist ${HOME}/.xiphos
+blacklist ${HOME}/.xmind
 blacklist ${HOME}/.xmms
 blacklist ${HOME}/.xmr-stak
 blacklist ${HOME}/.xonotic
@@ -551,7 +559,7 @@ blacklist ${HOME}/.cache/kdenlive
 blacklist ${HOME}/.cache/kinfocenter
 blacklist ${HOME}/.cache/kmail2
 blacklist ${HOME}/.cache/krunner
-blacklist ${HOME}/.cache/krunnerbookmarkrunnerfirefoxdbfile.sqlite
+blacklist ${HOME}/.cache/krunnerbookmarkrunnerfirefoxdbfile.sqlite*
 blacklist ${HOME}/.cache/kscreenlocker_greet
 blacklist ${HOME}/.cache/ksmserver-logout-greeter
 blacklist ${HOME}/.cache/ksplashqml
@@ -572,6 +580,7 @@ blacklist ${HOME}/.cache/org.gnome.Books
 blacklist ${HOME}/.cache/pdfmod
 blacklist ${HOME}/.cache/peek
 blacklist ${HOME}/.cache/plasmashell
+blacklist ${HOME}/.cache/plasmashellbookmarkrunnerfirefoxdbfile.sqlite*
 blacklist ${HOME}/.cache/qBittorrent
 blacklist ${HOME}/.cache/qupzilla
 blacklist ${HOME}/.cache/qutebrowser

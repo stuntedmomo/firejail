@@ -7,6 +7,7 @@ include /etc/firejail/globals.local
 
 include /etc/firejail/disable-common.inc
 include /etc/firejail/disable-devel.inc
+include /etc/firejail/disable-interpreters.inc
 include /etc/firejail/disable-passwdmgr.inc
 include /etc/firejail/disable-programs.inc
 
@@ -18,6 +19,8 @@ net none
 no3d
 nodbus
 nodvd
+# When using 'volatile' storage (https://www.freedesktop.org/software/systemd/man/journald.conf.html),
+# comment both 'nogroups' and 'noroot'
 nogroups
 nonewprivs
 noroot
@@ -31,8 +34,8 @@ shell none
 disable-mnt
 private-bin gnome-logs
 private-dev
-#private-etc fonts
-#private-lib gdk-pixbuf-2.0,gio,gvfs/libgvfscommon.so,libgconf-2.so.4,librsvg-2.so.2
+private-etc fonts,localtime,machine-id
+private-lib gdk-pixbuf-2.*,gio,gvfs/libgvfscommon.so,libgconf-2.so.*,librsvg-2.so.*
 private-tmp
 writable-var-log
 
