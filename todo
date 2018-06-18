@@ -1,3 +1,10 @@
+done evaluate UID_MIN/GID_MID at runtime, remove compile time evaluation
+ done Makefile.in
+ done src/firejail/restrict_users.c
+ done src/include/firejail_user.h
+ done src/lib/firejail_user.c
+
+******************************************************************
 add private-cache option
  src/firejail/firejail.h
  src/firejail/fs.c
@@ -6,52 +13,42 @@ add private-cache option
  src/firejail/sandbox.c
  src/firejail/util.c
 
-
-evaluate UID_MIN/GID_MID at runtime, remove compile time evaluation
- done Makefile.in
- done src/firejail/restrict_users.c
- src/include/firejail_user.h
- src/lib/firejail_user.c
-
-
-support wireless interfaces for --net
-src/fnet/fnet.h
- src/fnet/main.c
- src/fnet/veth.c
- src/man/firejail.txt
-
-
-glibc missing O_PATH definition on Debian 7
- src/firejail/fs.c
-  src/firejail/util.c
-
-
-wireless support
-src/firejail/checkcfg.c
- src/fnet/main.c
-  src/fnet/veth.c
-  src/man/firejail.txt
-
-removed CFG_CHROOT_DESKTOP config option
-etc/firejail.config
-src/firejail/checkcfg.c
-src/firejail/firejail.h
-src/firejail/fs.c
-
-
-additional mount hardening (pulseaudio, Xauthority)
- src/firejail/pulseaudio.c
-  src/firejail/x11.c
-
-
-fix indentation
-src/firejail/pulseaudio.c
-
 update man page (private-cache)
 src/firejail/fs.c
 src/man/firejail-profile.txt
  src/man/firejail.txt
 
+******************************************************************
+additional mount hardening (pulseaudio, Xauthority)
+ src/firejail/pulseaudio.c
+  src/firejail/x11.c
+
+fix indentation
+src/firejail/pulseaudio.c
+
+******************************************************************
+
+done support wireless interfaces for --net
+done src/fnet/fnet.h
+done src/fnet/main.c
+done src/fnet/veth.c
+done src/man/firejail.txt
+
+
+done glibc missing O_PATH definition on Debian 7
+done src/firejail/fs.c
+done src/firejail/util.c
+
+
+done wireless support
+nothing to do src/firejail/checkcfg.c
+done src/fnet/main.c
+done src/fnet/veth.c
+done src/man/firejail.txt
+
+
+
+******************************************************************
 potential fix for Yubikey devices
  src/firejail/fs_dev.c
 
