@@ -1108,7 +1108,7 @@ int main(int argc, char **argv) {
 
 				// checks
 				if (arg_nonetwork) {
-					fprintf(stderr, "Error: --network=none and --interface are incompatible\n");
+					fprintf(stderr, "Error: --net=none and --interface are incompatible\n");
 					exit(1);
 				}
 				if (strcmp(argv[i] + 12, "lo") == 0) {
