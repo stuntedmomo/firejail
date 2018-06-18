@@ -123,6 +123,7 @@ static char *usage_str =
 	"    --nosound - disable sound system.\n"
 	"    --noautopulse - disable automatic ~/.config/pulse init.\n"
 	"    --novideo - disable video devices.\n"
+	"    --nou2f - disable U2F devices.\n"
 	"    --nowhitelist=filename - disable whitelist for file or directory .\n"
 	"    --private - temporary home directory.\n"
 	"    --private=directory - use directory as user home.\n"

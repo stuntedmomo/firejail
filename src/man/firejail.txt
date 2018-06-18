@@ -998,6 +998,16 @@ Example:
 $ firejail \-\-notv vlc
 
 .TP
+\fB\-\-nou2f
+Disable U2F devices.
+ .br
+
+ .br
+ Example:
+ .br
+$ firejail \-\-nou2f
+
+.TP
 \fB\-\-novideo
 Disable video devices.
 .br

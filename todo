@@ -50,20 +50,21 @@ done src/man/firejail.txt
 
 ******************************************************************
 potential fix for Yubikey devices
- src/firejail/fs_dev.c
+done src/firejail/fs_dev.c
 
 
 Add /dev/hidraw* devices for potential fix for Yubikey devices
-src/firejail/fs_dev.c
+done src/firejail/fs_dev.c
 
 Add --nousb option
-src/firejail/firejail.h
-src/firejail/fs_dev.c
-src/firejail/main.c
-src/firejail/profile.c
- src/firejail/sandbox.c
-src/man/firejail-profile.txt
-  src/man/firejail.txt
+done src/firejail/firejail.h
+done src/firejail/fs_dev.c
+done src/firejail/main.c
+done src/firejail/profile.c
+done src/firejail/sandbox.c
+done src/firejail/usage.c
+done src/man/firejail-profile.txt
+done src/man/firejail.txt
 
 
 

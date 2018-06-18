@@ -462,6 +462,9 @@ pulse servers or non-standard socket paths.
 \fBnotv
 Disable DVB (Digital Video Broadcasting) TV devices.
 .TP
+\fBnou2f
+Disable U2F devices.
+.TP
 \fBnovideo
 Disable video devices.
 .TP

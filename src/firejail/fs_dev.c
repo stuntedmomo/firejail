@@ -39,6 +39,7 @@ typedef enum {
 	DEV_VIDEO,
 	DEV_TV,
 	DEV_DVD,
+	DEV_U2F,
 } DEV_TYPE;
 
 
@@ -76,6 +77,17 @@ static DevEntry dev[] = {
 	{"/dev/video9", RUN_DEV_DIR "/video9", DEV_VIDEO},
 	{"/dev/dvb", RUN_DEV_DIR "/dvb", DEV_TV}, // DVB (Digital Video Broadcasting) - TV device
 	{"/dev/sr0", RUN_DEV_DIR "/sr0", DEV_DVD}, // for DVD and audio CD players
+	{"/dev/hidraw0", RUN_DEV_DIR "/hidraw0", DEV_U2F},
+	{"/dev/hidraw1", RUN_DEV_DIR "/hidraw1", DEV_U2F},
+	{"/dev/hidraw2", RUN_DEV_DIR "/hidraw2", DEV_U2F},
+	{"/dev/hidraw3", RUN_DEV_DIR "/hidraw3", DEV_U2F},
+	{"/dev/hidraw4", RUN_DEV_DIR "/hidraw4", DEV_U2F},
+	{"/dev/hidraw5", RUN_DEV_DIR "/hidraw5", DEV_U2F},
+	{"/dev/hidraw6", RUN_DEV_DIR "/hidraw6", DEV_U2F},
+	{"/dev/hidraw7", RUN_DEV_DIR "/hidraw7", DEV_U2F},
+	{"/dev/hidraw8", RUN_DEV_DIR "/hidraw8", DEV_U2F},
+	{"/dev/hidraw9", RUN_DEV_DIR "/hidraw9", DEV_U2F},
+	{"/dev/usb", RUN_DEV_DIR "/usb", DEV_U2F},	// USB devices such as Yubikey, U2F
 	{NULL, NULL, DEV_NONE}
 };
 
@@ -84,13 +96,13 @@ static void deventry_mount(void) {
 	while (dev[i].dev_fname != NULL) {
 		struct stat s;
 		if (stat(dev[i].run_fname, &s) == 0) {
-
 			// check device type and subsystem configuration
 			if ((dev[i].type == DEV_SOUND && arg_nosound == 0) ||
 			    (dev[i].type == DEV_3D && arg_no3d == 0) ||
 			    (dev[i].type == DEV_VIDEO && arg_novideo == 0) ||
 			    (dev[i].type == DEV_TV && arg_notv == 0) ||
-			    (dev[i].type == DEV_DVD && arg_nodvd == 0)) {
+			    (dev[i].type == DEV_DVD && arg_nodvd == 0) ||
+			    (dev[i].type == DEV_U2F && arg_nou2f == 0)) {
 
 				int dir = is_dir(dev[i].run_fname);
 				if (arg_debug)
@@ -354,6 +366,15 @@ void fs_dev_disable_dvd(void) {
 	int i = 0;
 	while (dev[i].dev_fname != NULL) {
 		if (dev[i].type == DEV_DVD)
+			disable_file_or_dir(dev[i].dev_fname);
+		i++;
+	}
+}
+
+void fs_dev_disable_u2f(void) {
+	int i = 0;
+	while (dev[i].dev_fname != NULL) {
+		if (dev[i].type == DEV_U2F)
 			disable_file_or_dir(dev[i].dev_fname);
 		i++;
 	}
