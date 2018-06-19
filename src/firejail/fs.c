@@ -30,9 +30,9 @@
 
 // on Debian 7/Ubuntu 14.04 we are missing O_PATH definition
 #include <fcntl.h>
-#ifndef O_PATH
-#define O_PATH		010000000
-#endif
+//#ifndef O_PATH
+//#define O_PATH		010000000
+//#endif
 
 static void fs_rdwr(const char *dir);
 
