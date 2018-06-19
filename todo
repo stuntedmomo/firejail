@@ -19,12 +19,12 @@ done src/man/firejail-profile.txt
 done src/man/firejail.txt
 
 ******************************************************************
-additional mount hardening (pulseaudio, Xauthority)
- src/firejail/pulseaudio.c
-  src/firejail/x11.c
+done additional mount hardening (pulseaudio, Xauthority)
+done src/firejail/pulseaudio.c
+not required src/firejail/x11.c
 
-fix indentation
-src/firejail/pulseaudio.c
+done fix indentation
+done src/firejail/pulseaudio.c
 
 ******************************************************************
 
@@ -49,14 +49,14 @@ done src/man/firejail.txt
 
 
 ******************************************************************
-potential fix for Yubikey devices
+done potential fix for Yubikey devices
 done src/firejail/fs_dev.c
 
 
-Add /dev/hidraw* devices for potential fix for Yubikey devices
+done Add /dev/hidraw* devices for potential fix for Yubikey devices
 done src/firejail/fs_dev.c
 
-Add --nousb option
+done Add --nousb option
 done src/firejail/firejail.h
 done src/firejail/fs_dev.c
 done src/firejail/main.c
