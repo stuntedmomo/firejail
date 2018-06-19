@@ -708,6 +708,9 @@ int sandbox(void* sandbox_arg) {
 	if (arg_private_dev)
 		fs_private_dev();
 
+	if (arg_private_cache)
+		fs_private_cache();
+
 	if (arg_private_tmp) {
 		// private-tmp is implemented as a whitelist
 		EUID_USER();

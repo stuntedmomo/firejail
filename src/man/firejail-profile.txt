@@ -212,6 +212,10 @@ closed.
 \fBprivate directory
 Use directory as user home.
 .TP
+\fBprivate-cache
+Mount an empty temporary filesystem on top of the .cache directory in user home. All
+modifications are discarded when the sandbox is closed.
+.TP
 \fBprivate-home file,directory
 Build a new user home in a temporary
 filesystem, and copy the files and directories in the list in the

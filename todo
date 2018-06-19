@@ -5,18 +5,18 @@ done evaluate UID_MIN/GID_MID at runtime, remove compile time evaluation
  done src/lib/firejail_user.c
 
 ******************************************************************
-add private-cache option
- src/firejail/firejail.h
- src/firejail/fs.c
- src/firejail/main.c
- src/firejail/profile.c
- src/firejail/sandbox.c
- src/firejail/util.c
+done add private-cache option
+done src/firejail/firejail.h
+done src/firejail/fs.c
+done src/firejail/main.c
+done src/firejail/profile.c
+done src/firejail/sandbox.c
+done src/firejail/util.c
 
-update man page (private-cache)
-src/firejail/fs.c
-src/man/firejail-profile.txt
- src/man/firejail.txt
+done update man page (private-cache)
+done src/firejail/fs.c
+done src/man/firejail-profile.txt
+done src/man/firejail.txt
 
 ******************************************************************
 additional mount hardening (pulseaudio, Xauthority)
@@ -66,5 +66,5 @@ done src/firejail/usage.c
 done src/man/firejail-profile.txt
 done src/man/firejail.txt
 
-
+done Change --nousb to --nou2f per suggestion on last commit.
 

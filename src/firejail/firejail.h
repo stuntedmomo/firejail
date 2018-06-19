@@ -282,6 +282,7 @@ static inline int any_interface_configured(void) {
 
 extern int arg_private;		// mount private /home
 extern int arg_private_template; // private /home template
+extern int arg_private_cache;	// private home/.cache
 extern int arg_debug;		// print debug messages
 extern int arg_nonetwork;	// --net=none
 extern int arg_command;	// -c
@@ -390,6 +391,7 @@ void fs_proc_sys_dev_boot(void);
 void fs_basic_fs(void);
 // private /tmp directory
 void fs_private_tmp(void);
+void fs_private_cache(void);
 // disable-mnt
 void fs_mnt(void);
 
@@ -466,6 +468,7 @@ void mkdir_attr(const char *fname, mode_t mode, uid_t uid, gid_t gid);
 unsigned extract_timeout(const char *str);
 void disable_file_or_dir(const char *fname);
 void disable_file_path(const char *path, const char *file);
+int safe_fd(const char *path, int flags);
 
 // Get info regarding the last kernel mount operation from /proc/self/mountinfo
 // The return value points to a static area, and will be overwritten by subsequent calls.

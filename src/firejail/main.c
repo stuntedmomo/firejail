@@ -45,7 +45,8 @@ gid_t firejail_gid = 0;
 static char child_stack[STACK_SIZE];		// space for child's stack
 Config cfg;					// configuration
 int arg_private = 0;				// mount private /home and /tmp directoryu
-int arg_private_template = 0; // mount private /home using a template
+int arg_private_template = 0;		// mount private /home using a template
+int arg_private_cache = 0;		// mount private home/.cache
 int arg_debug = 0;				// print debug messages
 int arg_nonetwork = 0;				// --net=none
 int arg_command = 0;				// -c
@@ -1040,6 +1041,9 @@ int main(int argc, char **argv) {
 		}
 		else if (strcmp(argv[i], "--private-tmp") == 0) {
 			arg_private_tmp = 1;
+		}
+		else if (strcmp(argv[i], "--private-cache") == 0) {
+			arg_private_cache = 1;
 		}
 
 		//*************************************
