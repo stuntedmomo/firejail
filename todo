@@ -1,3 +1,126 @@
+(Commits on Jul 17, 2018)
+rework --netmask
+firejail.h
+main.c
+network_main.c
+profile.c
+
+
+network testing
+full update for test/network
+
+
+Merge branch 'master' of https://github.com/netblue30/firejail
+fs_lib.c
+test/fs/whitelist-dev.exp
+
+set umask for internal use
+firejail.h
+join.c
+main.c
+run_symlink.c
+sandbox.c
+
+
+
+rework fix for empty spaces in mountinfo fields
+mountinfo.c
+
+
+
+testing
+test/fs/whitelist-dev.exp
+
+fix private-lib crash
+fs_lib.c
+
+minor improvements to previous commit 949b924
+util.c
+
+fix empty spaces in mountinfo fields
+/fs_whitelist.c
+util.c
+
+tunneling support - tap interface in --net option
+main.c
+man/firejail-profile.txt
+man/firejail.txt
+
+
+Add personality to allow-debuggers (see #2021)
+fseccomp/syscall.c
+
+ fix f57dd4a (mountinfo, fslogger)
+fs_whitelist.c
+
+
+--netmask option
+firejail.h
+main.c
+network_main.c
+profile.c
+usage.c
+man/firejail-profile.txt
+man/firejail.txt
+
+
+additional whitelist hardening
+fs_whitelist.c
+util.c
+
+
+remove redundant checks in whitelist_path
+fs_whitelist.c
+
+increase include level for profile files to 16 - issue 2009
+firejail.h
+
+cleanup
+fs_whitelist.c
+
+whitelist symlink handling, allow /var/tmp symlinks - issue #2011
+fs_whitelist.c
+
+fix bc70dbf
+/fs_whitelist.c
+
+fix whitelisting of /dev/log
+/fs_whitelist.c
+
+
+print Xephyr params at startup
+x11.c
+
+Revert "mounting a tmpfs on ~/.cache directory (private-cache) by def…
+etc/firejail.config
+checkcfg.c
+firejail.h
+fs.c
+main.c
+profile.c
+sandbox.c
+man/firejail-profile.txt
+man/firejail.txt
+
+
+
+******************************************************************
+done Add documentation for keep-dev-shm option
+done usage.c
+done man/firejail-profile.txt
+done man/firejail.txt
+
+done Add --keep-dev-shm (undocumented for now).
+done firejail.h
+done fs_dev.c
+done main.c
+done profile.c
+
+
+******************************************************************
+******************************************************************
+******************************************************************
+******************************************************************
 done evaluate UID_MIN/GID_MID at runtime, remove compile time evaluation
  done Makefile.in
  done src/firejail/restrict_users.c
