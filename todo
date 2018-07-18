@@ -7,16 +7,6 @@ main.c
 run_symlink.c
 sandbox.c
 
-minor improvements to previous commit 949b924
-util.c
-
-fix empty spaces in mountinfo fields
-/fs_whitelist.c
-util.c
-
-
- fix f57dd4a (mountinfo, fslogger)
-fs_whitelist.c
 
 ******************************************************************
 tunneling support - tap interface in --net option
@@ -49,27 +39,46 @@ man/firejail.txt
 
 
 ******************************************************************
-rework fix for empty spaces in mountinfo fields
-mountinfo.c
+done minor improvements to previous commit 949b924
+done util.c
 
-additional whitelist hardening
-fs_whitelist.c
-util.c
+done fix empty spaces in mountinfo fields
+done /fs_whitelist.c
+done util.c
 
-remove redundant checks in whitelist_path
-fs_whitelist.c
 
-cleanup
-fs_whitelist.c
+done fix f57dd4a (mountinfo, fslogger)
+done fs_whitelist.c
 
-whitelist symlink handling, allow /var/tmp symlinks - issue #2011
-fs_whitelist.c
+done rework fix for empty spaces in mountinfo fields
+done mountinfo.c
 
-fix bc70dbf
-/fs_whitelist.c
+done additional whitelist hardening
+done fs_whitelist.c
+done util.c
 
-fix whitelisting of /dev/log
-/fs_whitelist.c
+done remove redundant checks in whitelist_path
+done fs_whitelist.c
+
+done cleanup
+done fs_whitelist.c
+
+done whitelist symlink handling, allow /var/tmp symlinks - issue #2011
+done fs_whitelist.c
+
+done fix bc70dbf
+done /fs_whitelist.c
+
+done fix whitelisting of /dev/log
+done /fs_whitelist.c
+
+
+
+
+
+
+
+
 
 
 ******************************************************************
