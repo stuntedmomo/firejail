@@ -1041,6 +1041,9 @@ int main(int argc, char **argv) {
 		else if (strcmp(argv[i], "--keep-dev-shm") == 0) {
 			arg_keep_dev_shm = 1;
 		}
+		else if (strcmp(argv[i], "--private-cache") == 0) {
+			arg_private_cache = 1;
+		}
 		else if (strcmp(argv[i], "--private-tmp") == 0) {
 			arg_private_tmp = 1;
 		}

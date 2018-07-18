@@ -91,20 +91,23 @@ fix whitelisting of /dev/log
 print Xephyr params at startup
 x11.c
 
-Revert "mounting a tmpfs on ~/.cache directory (private-cache) by def…
-etc/firejail.config
-checkcfg.c
-firejail.h
-fs.c
-main.c
-profile.c
-sandbox.c
-man/firejail-profile.txt
-man/firejail.txt
+******************************************************************
+******************************************************************
+******************************************************************
 
-
+done Revert "mounting a tmpfs on ~/.cache directory (private-cache) by def…
+done etc/firejail.config
+done checkcfg.c
+done firejail.h
+done fs.c
+done main.c
+done profile.c
+done sandbox.c
+done man/firejail-profile.txt
+done man/firejail.txt
 
 ******************************************************************
+July 17
 done Add documentation for keep-dev-shm option
 done usage.c
 done man/firejail-profile.txt
@@ -117,9 +120,6 @@ done main.c
 done profile.c
 
 
-******************************************************************
-******************************************************************
-******************************************************************
 ******************************************************************
 done evaluate UID_MIN/GID_MID at runtime, remove compile time evaluation
  done Makefile.in
