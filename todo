@@ -1,4 +1,29 @@
 (Commits on Jul 17, 2018)
+
+set umask for internal use
+firejail.h
+join.c
+main.c
+run_symlink.c
+sandbox.c
+
+minor improvements to previous commit 949b924
+util.c
+
+fix empty spaces in mountinfo fields
+/fs_whitelist.c
+util.c
+
+
+ fix f57dd4a (mountinfo, fslogger)
+fs_whitelist.c
+
+******************************************************************
+tunneling support - tap interface in --net option
+main.c
+man/firejail-profile.txt
+man/firejail.txt
+
 rework --netmask
 firejail.h
 main.c
@@ -8,51 +33,6 @@ profile.c
 
 network testing
 full update for test/network
-
-
-Merge branch 'master' of https://github.com/netblue30/firejail
-fs_lib.c
-test/fs/whitelist-dev.exp
-
-set umask for internal use
-firejail.h
-join.c
-main.c
-run_symlink.c
-sandbox.c
-
-
-
-rework fix for empty spaces in mountinfo fields
-mountinfo.c
-
-
-
-testing
-test/fs/whitelist-dev.exp
-
-fix private-lib crash
-fs_lib.c
-
-minor improvements to previous commit 949b924
-util.c
-
-fix empty spaces in mountinfo fields
-/fs_whitelist.c
-util.c
-
-tunneling support - tap interface in --net option
-main.c
-man/firejail-profile.txt
-man/firejail.txt
-
-
-Add personality to allow-debuggers (see #2021)
-fseccomp/syscall.c
-
- fix f57dd4a (mountinfo, fslogger)
-fs_whitelist.c
-
 
 --netmask option
 firejail.h
@@ -64,16 +44,20 @@ man/firejail-profile.txt
 man/firejail.txt
 
 
+
+
+
+
+******************************************************************
+rework fix for empty spaces in mountinfo fields
+mountinfo.c
+
 additional whitelist hardening
 fs_whitelist.c
 util.c
 
-
 remove redundant checks in whitelist_path
 fs_whitelist.c
-
-increase include level for profile files to 16 - issue 2009
-firejail.h
 
 cleanup
 fs_whitelist.c
@@ -88,13 +72,24 @@ fix whitelisting of /dev/log
 /fs_whitelist.c
 
 
-print Xephyr params at startup
-x11.c
+******************************************************************
+Merge branch 'master' of https://github.com/netblue30/firejail
+fs_lib.c
+test/fs/whitelist-dev.exp
+
+
+testing
+test/fs/whitelist-dev.exp
 
 ******************************************************************
-******************************************************************
-******************************************************************
+Add personality to allow-debuggers (see #2021)
+fseccomp/syscall.c
 
+******************************************************************
+done increase include level for profile files to 16 - issue 2009
+done firejail.h
+
+******************************************************************
 done Revert "mounting a tmpfs on ~/.cache directory (private-cache) by def…
 done etc/firejail.config
 done checkcfg.c
