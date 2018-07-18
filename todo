@@ -73,17 +73,16 @@ fix whitelisting of /dev/log
 
 
 ******************************************************************
-Merge branch 'master' of https://github.com/netblue30/firejail
-fs_lib.c
-test/fs/whitelist-dev.exp
+done Merge branch 'master' of https://github.com/netblue30/firejail
+done fs_lib.c
+done test/fs/whitelist-dev.exp
 
-
-testing
-test/fs/whitelist-dev.exp
+done testing
+done test/fs/whitelist-dev.exp
 
 ******************************************************************
-Add personality to allow-debuggers (see #2021)
-fseccomp/syscall.c
+done Add personality to allow-debuggers (see #2021)
+done fseccomp/syscall.c
 
 ******************************************************************
 done increase include level for profile files to 16 - issue 2009
